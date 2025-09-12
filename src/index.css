@@ -1,0 +1,4 @@
+/* Minimal reset - no global styles */
+* {
+  box-sizing: border-box;
+}
