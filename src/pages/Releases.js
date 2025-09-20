@@ -1,20 +1,263 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { client } from '../lib/sanity';
+import { urlFor } from '../lib/sanity';
+import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
+import '../styles/Music.css';
 
 function Releases() {
+  const [siteSettings, setSiteSettings] = useState(null);
+  const [releases, setReleases] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch site settings for background image
+        const siteData = await client.fetch(`
+          *[_type == "siteSettings"][0] {
+            backgroundImage
+          }
+        `);
+        setSiteSettings(siteData);
+
+        // Fetch all releases sorted by release date (newest first)
+        const releasesData = await client.fetch(`
+          *[_type == "release"] | order(releaseDate desc) {
+            _id,
+            title,
+            releaseDate,
+            albumCover,
+            streamLink,
+            buyLink,
+            lyricsLink
+          }
+        `);
+        setReleases(releasesData);
+      } catch (err) {
+        setError('Failed to load content');
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'TBA';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
+  const handleLinkClick = (url) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="music-container">
+        <div style={{ fontSize: '1.5rem', color: '#7C898B' }}>Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="music-container">
+        <h1 className="music-title">Music Releases</h1>
+        <div style={{ fontSize: '1.5rem', color: '#7C898B', textAlign: 'center' }}>
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+
+  const navItems = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/releases', label: 'Music' },
+    { path: '/shows', label: 'Shows' },
+    { path: '/contact', label: 'Contact' },
+  ];
+
+  const socialLinks = [
+    { name: 'Instagram', url: '#', icon: FaInstagram },
+    { name: 'Facebook', url: '#', icon: FaFacebook },
+    { name: 'TikTok', url: '#', icon: FaTiktok },
+    { name: 'Spotify', url: '#', icon: FaSpotify },
+    { name: 'Apple Music', url: '#', icon: FaApple },
+    { name: 'YouTube', url: '#', icon: FaYoutube },
+  ];
+
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      padding: '2rem',
-      backgroundColor: '#93A3B1',
-      color: '#322214',
-      fontFamily: 'Georgia, serif'
-    }}>
-      <h1 style={{ fontSize: '2rem', marginBottom: '1rem', textAlign: 'center' }}>
-        Music Releases
-      </h1>
-      <p style={{ fontSize: '1.1rem', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto' }}>
-        This is the Releases page. Music releases will be displayed here.
-      </p>
+    <div className="music-container">
+      {/* Background image with transparency overlay */}
+      {backgroundImageUrl && (
+        <div 
+          className="background-image-overlay"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: `url(${backgroundImageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.15, // Very transparent - only 15% visible
+            zIndex: 1
+          }}
+        />
+      )}
+      
+      {/* Dark overlay to ensure content readability */}
+      <div 
+        className="content-overlay"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(50, 34, 20, 0.85)', // Dark overlay to make content readable
+          zIndex: 2
+        }}
+      />
+
+      {/* Left Sidebar - Navigation */}
+      <div className="left-sidebar" style={{ zIndex: 10 }}>
+        <h3 className="sidebar-title">Pages</h3>
+        <div className="nav-list">
+          {navItems.map((item) => (
+            <Link 
+              key={item.path} 
+              to={item.path} 
+              className={`nav-item ${item.path === '/releases' ? 'active' : ''}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <h1 className="music-title" style={{ zIndex: 10 }}>Music Releases</h1>
+      
+      <div className="divider-bar" style={{ zIndex: 10 }}></div>
+
+      {/* Releases Section */}
+      <div className="releases-section" style={{ zIndex: 10 }}>
+        {releases.length > 0 ? (
+          releases.map((release) => (
+            <div key={release._id} className="release-item">
+              <div className="release-cover">
+                {release.albumCover ? (
+                  <img 
+                    src={urlFor(release.albumCover).width(400).url()} 
+                    alt={`${release.title} album cover`}
+                  />
+                ) : (
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: '#636564',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#322214',
+                    fontSize: '1.2rem',
+                    fontFamily: 'Unna, serif'
+                  }}>
+                    TBA
+                  </div>
+                )}
+              </div>
+              
+              <div className="release-info">
+                <h2 className="release-title">
+                  {release.title || 'TBA'}
+                </h2>
+                <p className="release-date">
+                  Released: {formatDate(release.releaseDate)}
+                </p>
+                
+                <div className="release-links">
+                  {release.streamLink && (
+                    <button 
+                      className="release-link stream"
+                      onClick={() => handleLinkClick(release.streamLink)}
+                    >
+                      🎵 Stream
+                    </button>
+                  )}
+                  
+                  {release.buyLink && (
+                    <button 
+                      className="release-link buy"
+                      onClick={() => handleLinkClick(release.buyLink)}
+                    >
+                      💿 Buy
+                    </button>
+                  )}
+                  
+                  {release.lyricsLink && (
+                    <button 
+                      className="release-link lyrics"
+                      onClick={() => handleLinkClick(release.lyricsLink)}
+                    >
+                      📝 Lyrics
+                    </button>
+                  )}
+                  
+                  {!release.streamLink && !release.buyLink && !release.lyricsLink && (
+                    <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
+                      Links coming soon
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="no-releases">
+            No releases
+          </div>
+        )}
+      </div>
+
+      {/* Right Sidebar - Social Media */}
+      <div className="right-sidebar" style={{ zIndex: 10 }}>
+        <h3 className="sidebar-title">Connect</h3>
+        <div className="social-list">
+          {socialLinks.map((social) => {
+            const IconComponent = social.icon;
+            return (
+              <a 
+                key={social.name} 
+                href={social.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="social-item"
+              >
+                <IconComponent size={18} />
+                <span>{social.name}</span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
