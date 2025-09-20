@@ -144,14 +144,20 @@ html, body, #root {
   top: 0;
   height: 100vh;
   width: 200px;
-  background-color: rgba(76, 68, 60, 0.7) !important;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(to right, 
+    rgba(76, 68, 60, 0.5) 0%, 
+    rgba(76, 68, 60, 0.3) 30%, 
+    rgba(76, 68, 60, 0.15) 60%, 
+    rgba(76, 68, 60, 0.08) 80%, 
+    rgba(76, 68, 60, 0.04) 90%, 
+    rgba(76, 68, 60, 0.02) 100%) !important;
+  backdrop-filter: blur(20px) saturate(1.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 2rem 1rem;
   z-index: 5;
-  box-shadow: 4px 0 20px rgba(50, 34, 20, 0.1);
+  box-shadow: none;
 }
 
 .sidebar-title {
@@ -182,22 +188,25 @@ html, body, #root {
 }
 
 .nav-item {
-  color: #322214 !important;
+  color: #B8C5A6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   font-size: 1rem;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   transition: all 0.3s ease;
   text-align: center;
   border: 1px solid transparent;
+  text-shadow: 1px 1px 2px rgba(50, 34, 20, 0.3);
 }
 
 .nav-item:hover {
-  background-color: #322214 !important;
-  color: #7C898B !important;
-  transform: translateX(5px);
-  border-color: #322214;
+  color: #D4E4C5 !important;
+  transform: translateX(5px) scale(1.15);
+  text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 /* Right sidebar - Social Media */
@@ -207,14 +216,20 @@ html, body, #root {
   top: 0;
   height: 100vh;
   width: 200px;
-  background-color: rgba(76, 68, 60, 0.7) !important;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(to left, 
+    rgba(76, 68, 60, 0.5) 0%, 
+    rgba(76, 68, 60, 0.3) 30%, 
+    rgba(76, 68, 60, 0.15) 60%, 
+    rgba(76, 68, 60, 0.08) 80%, 
+    rgba(76, 68, 60, 0.04) 90%, 
+    rgba(76, 68, 60, 0.02) 100%) !important;
+  backdrop-filter: blur(20px) saturate(1.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 2rem 1rem;
   z-index: 5;
-  box-shadow: -4px 0 20px rgba(50, 34, 20, 0.1);
+  box-shadow: none;
 }
 
 .social-list {
@@ -224,10 +239,11 @@ html, body, #root {
 }
 
 .social-item {
-  color: #322214 !important;
+  color: #B8C5A6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   font-size: 1rem;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   transition: all 0.3s ease;
@@ -237,13 +253,15 @@ html, body, #root {
   justify-content: center;
   gap: 0.5rem;
   border: 1px solid transparent;
+  text-shadow: 1px 1px 2px rgba(50, 34, 20, 0.3);
 }
 
 .social-item:hover {
-  background-color: #322214 !important;
-  color: #7C898B !important;
-  transform: translateX(-5px);
-  border-color: #322214;
+  color: #D4E4C5 !important;
+  transform: translateX(-5px) scale(1.15);
+  text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .social-item svg {
