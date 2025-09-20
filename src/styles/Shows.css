@@ -1,0 +1,421 @@
+/* Shows Page Styles - Rustic Americana Theme */
+
+/* Import Unna font */
+@import url('https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Force background colors - highest specificity */
+html, body, #root {
+  background-color: #322214 !important;
+  color: #322214 !important;
+  margin: 0;
+  padding: 0;
+  font-family: 'Unna', serif;
+}
+
+/* Shows container */
+.shows-container {
+  min-height: 100vh;
+  background-color: #322214 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8rem 2rem 2rem;
+}
+
+/* Main title */
+.shows-title {
+  font-family: 'Unna', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #7C898B !important;
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: -2rem;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+/* Horizontal divider bar */
+.divider-bar {
+  width: 600px; /* Fixed shorter width */
+  max-width: 600px;
+  height: 2px;
+  background-color: #636564;
+  margin: 2rem auto 4rem;
+  z-index: 10;
+  position: relative;
+}
+
+/* Shows section */
+.shows-section {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 10;
+  position: relative;
+}
+
+.show-item {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background-color: rgba(76, 68, 60, 0.1);
+  border-radius: 20px;
+  border: 2px solid rgba(99, 101, 100, 0.3);
+  transition: all 0.3s ease;
+}
+
+.show-item:hover {
+  background-color: rgba(76, 68, 60, 0.2);
+  border-color: rgba(124, 137, 139, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(50, 34, 20, 0.2);
+}
+
+.show-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.show-venue-image {
+  width: 200px;
+  height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid rgba(124, 137, 139, 0.3);
+  transition: all 0.3s ease;
+}
+
+.show-venue-image:hover {
+  transform: scale(1.05);
+  border-color: rgba(124, 137, 139, 0.6);
+  box-shadow: 0 4px 12px rgba(50, 34, 20, 0.2);
+}
+
+.show-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.show-venue {
+  font-family: 'Unna', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #7C898B !important;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.show-city {
+  font-family: 'Unna', serif;
+  font-size: 1.6rem;
+  color: #93A3B1 !important;
+  font-weight: 500;
+  margin: 0;
+}
+
+.show-datetime {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.show-date {
+  font-family: 'Unna', serif;
+  font-size: 1.8rem;
+  color: #7C898B !important;
+  font-weight: 600;
+  margin: 0;
+}
+
+.show-time {
+  font-family: 'Unna', serif;
+  font-size: 1.4rem;
+  color: #93A3B1 !important;
+  font-weight: 500;
+  margin: 0;
+}
+
+.show-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.show-link {
+  background-color: #636564 !important;
+  color: #322214 !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Unna', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.show-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(184, 197, 166, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.show-link:hover::before {
+  left: 100%;
+}
+
+.show-link:hover {
+  background-color: #7C898B !important;
+  color: #322214 !important;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(50, 34, 20, 0.3);
+}
+
+.show-link.tickets {
+  background-color: rgba(184, 197, 166, 0.8) !important;
+  color: #322214 !important;
+}
+
+/* No shows message */
+.no-shows {
+  text-align: center;
+  color: #7C898B !important;
+  font-size: 1.8rem;
+  font-family: 'Unna', serif;
+  margin: 4rem 0;
+}
+
+/* Left sidebar - Navigation */
+.left-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background: linear-gradient(to right, 
+    rgba(76, 68, 60, 0.3) 0%, 
+    rgba(76, 68, 60, 0.2) 25%, 
+    rgba(76, 68, 60, 0.1) 50%, 
+    rgba(76, 68, 60, 0.05) 75%, 
+    rgba(76, 68, 60, 0.02) 90%, 
+    rgba(76, 68, 60, 0.01) 100%) !important;
+  backdrop-filter: blur(8px) saturate(1.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+  z-index: 5;
+  box-shadow: none;
+}
+
+.sidebar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #7C898B !important;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Unna', serif;
+  position: relative;
+}
+
+.sidebar-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background-color: #7C898B;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav-item {
+  color: #B8C5A6 !important;
+  text-decoration: none;
+  font-family: 'Unna', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 1px solid transparent;
+  text-shadow: 1px 1px 2px rgba(50, 34, 20, 0.3);
+}
+
+.nav-item:hover {
+  color: #D4E4C5 !important;
+  transform: translateX(5px) scale(1.15);
+  text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  color: #D4E4C5 !important;
+  font-weight: 600;
+}
+
+/* Right sidebar - Social Media */
+.right-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background: linear-gradient(to left, 
+    rgba(76, 68, 60, 0.3) 0%, 
+    rgba(76, 68, 60, 0.2) 25%, 
+    rgba(76, 68, 60, 0.1) 50%, 
+    rgba(76, 68, 60, 0.05) 75%, 
+    rgba(76, 68, 60, 0.02) 90%, 
+    rgba(76, 68, 60, 0.01) 100%) !important;
+  backdrop-filter: blur(8px) saturate(1.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+  z-index: 5;
+  box-shadow: none;
+}
+
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.social-item {
+  color: #B8C5A6 !important;
+  text-decoration: none;
+  font-family: 'Unna', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  text-shadow: 1px 1px 2px rgba(50, 34, 20, 0.3);
+}
+
+.social-item:hover {
+  color: #D4E4C5 !important;
+  transform: translateX(-5px) scale(1.15);
+  text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.social-item svg {
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .left-sidebar,
+  .right-sidebar {
+    display: none;
+  }
+  
+  .shows-container {
+    padding: 1rem;
+  }
+  
+  .shows-title {
+    font-size: 3rem;
+  }
+  
+  .divider-bar {
+    width: 400px; /* Shorter width on mobile */
+    max-width: 400px;
+  }
+  
+  .show-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  .show-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .shows-title {
+    font-size: 2.5rem;
+  }
+  
+  .show-venue {
+    font-size: 2rem;
+  }
+  
+  .show-city {
+    font-size: 1.4rem;
+  }
+  
+  .show-date {
+    font-size: 1.5rem;
+  }
+  
+  .show-time {
+    font-size: 1.2rem;
+  }
+  
+  .show-link {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .show-venue-image {
+    width: 150px;
+    height: 120px;
+  }
+}
+
+/* Subtle texture overlay for rustic feel */
+.shows-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(147, 163, 177, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(76, 68, 60, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
