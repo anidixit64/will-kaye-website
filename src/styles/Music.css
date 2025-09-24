@@ -60,9 +60,10 @@ html, body, #root {
 }
 
 .release-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
   margin-bottom: 4rem;
   padding: 2rem;
   background-color: rgba(76, 68, 60, 0.1);
@@ -79,13 +80,14 @@ html, body, #root {
 }
 
 .release-cover {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   border-radius: 12px;
   overflow: hidden;
   border: 3px solid #636564;
   box-shadow: 0 4px 16px rgba(50, 34, 20, 0.2);
-  flex-shrink: 0;
+  margin: 0 auto;
+  justify-self: center;
 }
 
 .release-cover img {
@@ -95,19 +97,24 @@ html, body, #root {
 }
 
 .release-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .release-title {
   font-family: 'Unna', serif;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
-  color: #7C898B !important;
+  color: #D4E4C5 !important;
   margin: 0;
   letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(50, 34, 20, 0.4);
+  text-align: center;
+  line-height: 1.2;
 }
 
 .release-date {
@@ -115,67 +122,130 @@ html, body, #root {
   font-size: 1.4rem;
   color: #93A3B1 !important;
   font-weight: 500;
+  text-align: center;
 }
 
-.release-links {
+/* Release Actions - Pyramid layout on the right */
+.release-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 100%;
 }
 
-.release-link {
-  background-color: #636564 !important;
-  color: #322214 !important;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
+.release-action {
+  background: none;
+  border: 2px solid rgba(99, 101, 100, 0.4);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  color: #B8C5A6;
   font-family: 'Unna', serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.release-link::before {
+.release-action::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(184, 197, 166, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(184, 197, 166, 0.2), transparent);
   transition: left 0.6s ease;
 }
 
-.release-link:hover::before {
+.release-action:hover::before {
   left: 100%;
 }
 
-.release-link:hover {
-  background-color: #7C898B !important;
-  color: #322214 !important;
+.release-action:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 12px rgba(50, 34, 20, 0.3);
 }
 
-.release-link.stream {
-  background-color: rgba(184, 197, 166, 0.8) !important;
-  color: #322214 !important;
+.action-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.release-link.buy {
-  background-color: rgba(99, 101, 100, 0.9) !important;
-  color: #B8C5A6 !important;
+.action-icon svg {
+  color: inherit;
 }
 
-.release-link.lyrics {
-  background-color: rgba(124, 137, 139, 0.8) !important;
-  color: #322214 !important;
+/* Pyramid layout - different widths for each button */
+.release-action:nth-child(1) {
+  max-width: 180px; /* Largest - Stream */
+}
+
+.release-action:nth-child(2) {
+  max-width: 160px; /* Medium - Buy */
+}
+
+.release-action:nth-child(3) {
+  max-width: 140px; /* Smallest - Lyrics */
+}
+
+.action-text {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.release-action.stream {
+  border-color: rgba(184, 197, 166, 0.6);
+  color: #B8C5A6;
+}
+
+.release-action.stream:hover {
+  border-color: rgba(184, 197, 166, 0.8);
+  background-color: rgba(184, 197, 166, 0.1);
+  color: #D4E4C5;
+}
+
+.release-action.buy {
+  border-color: rgba(99, 101, 100, 0.6);
+  color: #93A3B1;
+}
+
+.release-action.buy:hover {
+  border-color: rgba(124, 137, 139, 0.8);
+  background-color: rgba(99, 101, 100, 0.1);
+  color: #B8C5A6;
+}
+
+.release-action.lyrics {
+  border-color: rgba(124, 137, 139, 0.6);
+  color: #7C898B;
+}
+
+.release-action.lyrics:hover {
+  border-color: rgba(124, 137, 139, 0.8);
+  background-color: rgba(124, 137, 139, 0.1);
+  color: #93A3B1;
+}
+
+.no-actions {
+  color: #93A3B1;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  font-family: 'Unna', serif;
 }
 
 /* No releases message */
@@ -345,18 +415,35 @@ html, body, #root {
   }
   
   .release-item {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
     text-align: center;
-    gap: 2rem;
+    gap: 2.5rem;
+    justify-items: center;
   }
   
   .release-cover {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
   }
   
-  .release-links {
+  .release-actions {
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .release-action:nth-child(1) {
+    max-width: 160px;
+  }
+  
+  .release-action:nth-child(2) {
+    max-width: 140px;
+  }
+  
+  .release-action:nth-child(3) {
+    max-width: 120px;
   }
 }
 
@@ -373,14 +460,34 @@ html, body, #root {
     font-size: 1.2rem;
   }
   
-  .release-link {
+  .release-action {
     font-size: 1rem;
-    padding: 0.6rem 1.2rem;
+    padding: 1rem 1.2rem;
+  }
+  
+  .release-action:nth-child(1) {
+    max-width: 140px;
+  }
+  
+  .release-action:nth-child(2) {
+    max-width: 120px;
+  }
+  
+  .release-action:nth-child(3) {
+    max-width: 100px;
+  }
+  
+  .action-text {
+    font-size: 0.9rem;
   }
   
   .release-cover {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
+  }
+  
+  .release-title {
+    font-size: 2.2rem;
   }
 }
 

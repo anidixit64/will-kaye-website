@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { client } from '../lib/sanity';
 import { urlFor } from '../lib/sanity';
-import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube, FaBandcamp } from 'react-icons/fa';
 import '../styles/Music.css';
 
 function Releases() {
@@ -162,6 +162,7 @@ function Releases() {
         {releases.length > 0 ? (
           releases.map((release) => (
             <div key={release._id} className="release-item">
+              {/* Left side - Square album cover */}
               <div className="release-cover">
                 {release.albumCover ? (
                   <img 
@@ -185,48 +186,59 @@ function Releases() {
                 )}
               </div>
               
+              {/* Middle - Album name and release date */}
               <div className="release-info">
                 <h2 className="release-title">
                   {release.title || 'TBA'}
                 </h2>
                 <p className="release-date">
-                  Released: {formatDate(release.releaseDate)}
+                  {formatDate(release.releaseDate)}
                 </p>
-                
-                <div className="release-links">
-                  {release.streamLink && (
-                    <button 
-                      className="release-link stream"
-                      onClick={() => handleLinkClick(release.streamLink)}
-                    >
-                      🎵 Stream
-                    </button>
-                  )}
-                  
-                  {release.buyLink && (
-                    <button 
-                      className="release-link buy"
-                      onClick={() => handleLinkClick(release.buyLink)}
-                    >
-                      💿 Buy
-                    </button>
-                  )}
-                  
-                  {release.lyricsLink && (
-                    <button 
-                      className="release-link lyrics"
-                      onClick={() => handleLinkClick(release.lyricsLink)}
-                    >
-                      📝 Lyrics
-                    </button>
-                  )}
-                  
-                  {!release.streamLink && !release.buyLink && !release.lyricsLink && (
-                    <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
-                      Links coming soon
+              </div>
+              
+              {/* Right side - Vertical column of action buttons */}
+              <div className="release-actions">
+                {release.streamLink && (
+                  <button 
+                    className="release-action stream"
+                    onClick={() => handleLinkClick(release.streamLink)}
+                  >
+                    <span className="action-icon">
+                      <FaBandcamp size={20} />
                     </span>
-                  )}
-                </div>
+                    <span className="action-text">Stream</span>
+                  </button>
+                )}
+                
+                {release.buyLink && (
+                  <button 
+                    className="release-action buy"
+                    onClick={() => handleLinkClick(release.buyLink)}
+                  >
+                    <span className="action-icon">
+                      <FaApple size={20} />
+                    </span>
+                    <span className="action-text">Buy</span>
+                  </button>
+                )}
+                
+                {release.lyricsLink && (
+                  <button 
+                    className="release-action lyrics"
+                    onClick={() => handleLinkClick(release.lyricsLink)}
+                  >
+                    <span className="action-icon">
+                      <FaSpotify size={20} />
+                    </span>
+                    <span className="action-text">Lyrics</span>
+                  </button>
+                )}
+                
+                {!release.streamLink && !release.buyLink && !release.lyricsLink && (
+                  <div className="no-actions">
+                    <span>Links coming soon</span>
+                  </div>
+                )}
               </div>
             </div>
           ))
