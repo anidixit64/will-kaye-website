@@ -88,9 +88,13 @@ html, body, #root {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2rem;
   margin-bottom: 3rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gallery-item {
@@ -108,7 +112,7 @@ html, body, #root {
 
 .gallery-image {
   width: 100%;
-  height: 180px;
+  height: 250px;
   object-fit: cover;
   display: block;
 }
@@ -349,8 +353,10 @@ html, body, #root {
   }
   
   .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
+    gap: 1.5rem;
+    max-width: 600px;
   }
 }
 
@@ -366,10 +372,11 @@ html, body, #root {
   .gallery-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+    max-width: 300px;
   }
   
   .gallery-image {
-    height: 150px;
+    height: 200px;
   }
   
   .epk-button {

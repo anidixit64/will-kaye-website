@@ -100,7 +100,7 @@ function Home() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            opacity: 0.15, // Very transparent - only 15% visible
+            opacity: 0.25, // More visible background - 25% visible
             zIndex: 1
           }}
         />
@@ -115,7 +115,7 @@ function Home() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(50, 34, 20, 0.85)', // Dark overlay to make content readable
+          backgroundColor: 'rgba(50, 34, 20, 0.70)', // More transparent dark overlay
           zIndex: 2
         }}
       />
