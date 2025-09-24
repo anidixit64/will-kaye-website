@@ -5,8 +5,8 @@
 
 /* Force background colors - highest specificity */
 html, body, #root {
-  background-color: #322214 !important;
-  color: #322214 !important;
+  background-color: #243C4F !important;
+  color: #243C4F !important;
   margin: 0;
   padding: 0;
   font-family: 'Unna', serif;
@@ -15,7 +15,7 @@ html, body, #root {
 /* Home container */
 .home-container {
   min-height: 100vh;
-  background-color: #322214 !important;
+  background-color: #243C4F !important;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ html, body, #root {
   top: 0;
   left: 0;
   right: 0;
-  height: 120px;
+  height: 400px;
   z-index: 15;
   background: transparent;
   pointer-events: auto;
@@ -110,7 +110,8 @@ html, body, #root {
 /* Mailing list section */
 .mailing-list-section {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto 6rem;
+  padding: 0 2rem 4rem;
   z-index: 10;
   position: relative;
 }
@@ -143,7 +144,7 @@ html, body, #root {
 
 .submit-button {
   background-color: #636564 !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 8px;
@@ -155,7 +156,7 @@ html, body, #root {
 
 .submit-button:hover {
   background-color: #7C898B !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   transform: translateY(-2px);
 }
 
@@ -165,14 +166,9 @@ html, body, #root {
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, 
-    rgba(0, 0, 139, 0.9) 0%, 
-    rgba(0, 0, 139, 0.8) 25%, 
-    rgba(0, 0, 139, 0.7) 50%, 
-    rgba(0, 0, 139, 0.6) 75%, 
-    rgba(0, 0, 139, 0.5) 90%, 
-    rgba(0, 0, 139, 0.4) 100%) !important;
+  height: 400px;
+  background-color: rgba(36, 60, 79, 0.95) !important;
+  background: rgba(36, 60, 79, 0.95) !important;
   backdrop-filter: blur(15px) saturate(1.4);
   display: flex;
   justify-content: space-between;
@@ -180,30 +176,36 @@ html, body, #root {
   padding: 0 3rem;
   z-index: 20;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: auto;
 }
 
 .top-navbar.visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  background-color: rgba(36, 60, 79, 0.95) !important;
+  background: rgba(36, 60, 79, 0.95) !important;
+  visibility: visible !important;
 }
 
 .top-navbar.hidden {
-  opacity: 0;
-  transform: translateY(-100%);
+  opacity: 0 !important;
+  transform: translateY(-100%) !important;
+  visibility: hidden !important;
 }
 
 /* Show navbar when hovering over the top area */
 .home-container:hover .top-navbar {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 
 /* Keep navbar visible when hovering over it */
 .top-navbar:hover {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 
 .nav-section {
@@ -212,6 +214,23 @@ html, body, #root {
   justify-content: flex-start;
   flex: 1;
   min-width: 0;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.header-title {
+  font-family: 'Unna', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #B8C5A6;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(50, 34, 20, 0.3);
 }
 
 .connect-section {
@@ -244,7 +263,7 @@ html, body, #root {
 .nav-list {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
 }
 
@@ -252,7 +271,7 @@ html, body, #root {
   color: #B8C5A6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -283,7 +302,7 @@ html, body, #root {
   color: #B8C5A6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
-  padding: 0.75rem;
+  padding: 1.2rem;
   border-radius: 6px;
   transition: all 0.3s ease;
   display: flex;

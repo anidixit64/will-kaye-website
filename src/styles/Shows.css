@@ -5,8 +5,8 @@
 
 /* Force background colors - highest specificity */
 html, body, #root {
-  background-color: #322214 !important;
-  color: #322214 !important;
+  background-color: #243C4F !important;
+  color: #243C4F !important;
   margin: 0;
   padding: 0;
   font-family: 'Unna', serif;
@@ -15,7 +15,7 @@ html, body, #root {
 /* Shows container */
 .shows-container {
   min-height: 100vh;
-  background-color: #322214 !important;
+  background-color: #243C4F !important;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -205,7 +205,7 @@ html, body, #root {
 
 .show-link {
   background-color: #636564 !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
@@ -237,14 +237,14 @@ html, body, #root {
 
 .show-link:hover {
   background-color: #7C898B !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 12px rgba(50, 34, 20, 0.3);
 }
 
 .show-link.tickets {
   background-color: rgba(184, 197, 166, 0.8) !important;
-  color: #322214 !important;
+  color: #243C4F !important;
 }
 
 /* No shows message */

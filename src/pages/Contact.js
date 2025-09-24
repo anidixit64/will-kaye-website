@@ -9,6 +9,9 @@ function Contact() {
   const [siteSettings, setSiteSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
@@ -25,6 +28,50 @@ function Contact() {
 
     fetchSiteSettings();
   }, []);
+
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          if (currentScrollY < 50) {
+            // Near top - always show
+            setShowHeader(true);
+          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Scrolling down past threshold - hide
+            setShowHeader(false);
+          } else if (currentScrollY < lastScrollY) {
+            // Scrolling up - show
+            setShowHeader(true);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  // Handle hover state
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+    setShowHeader(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    // Only hide if not near top and not scrolling up
+    if (window.scrollY > 100) {
+      setShowHeader(false);
+    }
+  };
 
   const handleEmailClick = (email) => {
     if (email) {
@@ -73,7 +120,11 @@ function Contact() {
   ];
 
   return (
-    <div className="home-container">
+    <div 
+      className="home-container"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -103,7 +154,7 @@ function Contact() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(50, 34, 20, 0.70)', // More transparent dark overlay
+          backgroundColor: 'rgba(36, 60, 79, 0.90)', // Less transparent navy overlay
           zIndex: 2
         }}
       />
@@ -116,7 +167,7 @@ function Contact() {
       />
 
       {/* Top Navigation Bar */}
-      <div className="top-navbar" style={{ zIndex: 10 }}>
+      <div className={`top-navbar ${showHeader ? 'visible' : 'hidden'}`}>
         <div className="nav-section">
           <div className="nav-list">
             {navItems.map((item) => (
@@ -129,6 +180,10 @@ function Contact() {
               </Link>
             ))}
           </div>
+        </div>
+        
+        <div className="title-section">
+          <h1 className="header-title">Will Kaye</h1>
         </div>
         
         <div className="connect-section">
@@ -144,7 +199,7 @@ function Contact() {
                   className="social-item"
                   title={social.name}
                 >
-                  <IconComponent size={24} />
+                  <IconComponent size={36} />
                 </a>
               );
             })}

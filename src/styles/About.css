@@ -5,8 +5,8 @@
 
 /* Force background colors - highest specificity */
 html, body, #root {
-  background-color: #322214 !important;
-  color: #322214 !important;
+  background-color: #243C4F !important;
+  color: #243C4F !important;
   margin: 0;
   padding: 0;
   font-family: 'Unna', serif;
@@ -15,7 +15,7 @@ html, body, #root {
 /* About container */
 .about-container {
   min-height: 100vh;
-  background-color: #322214 !important;
+  background-color: #243C4F !important;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -156,7 +156,7 @@ html, body, #root {
 
 .epk-button {
   background-color: #636564 !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   padding: 1rem 2rem;
   border: none;
   border-radius: 12px;
@@ -189,7 +189,7 @@ html, body, #root {
 
 .epk-button:hover {
   background-color: #7C898B !important;
-  color: #322214 !important;
+  color: #243C4F !important;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 24px rgba(50, 34, 20, 0.3);
   border: 2px solid rgba(184, 197, 166, 0.5);

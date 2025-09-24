@@ -12,8 +12,9 @@ function Home() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showHeader, setShowHeader] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
@@ -32,23 +33,48 @@ function Home() {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY < lastScrollY || currentScrollY < 100) {
-        // Scrolling up or near top - show header
-        setShowHeader(true);
-      } else {
-        // Scrolling down - hide header
-        setShowHeader(false);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          if (currentScrollY < 50) {
+            // Near top - always show
+            setShowHeader(true);
+          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Scrolling down past threshold - hide
+            setShowHeader(false);
+          } else if (currentScrollY < lastScrollY) {
+            // Scrolling up - show
+            setShowHeader(true);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
       }
-      
-      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  // Handle hover state
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+    setShowHeader(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    // Only hide if not near top and not scrolling up
+    if (window.scrollY > 100) {
+      setShowHeader(false);
+    }
+  };
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -108,7 +134,11 @@ function Home() {
   ];
 
   return (
-    <div className="home-container">
+    <div 
+      className="home-container"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -138,7 +168,7 @@ function Home() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(50, 34, 20, 0.70)', // More transparent dark overlay
+          backgroundColor: 'rgba(36, 60, 79, 0.90)', // Less transparent navy overlay
           zIndex: 2
         }}
       />
@@ -166,6 +196,10 @@ function Home() {
           </div>
         </div>
         
+        <div className="title-section">
+          <h1 className="header-title">Will Kaye</h1>
+        </div>
+        
         <div className="connect-section">
           <div className="social-list">
             {socialLinks.map((social) => {
@@ -179,7 +213,7 @@ function Home() {
                   className="social-item"
                   title={social.name}
                 >
-                  <IconComponent size={24} />
+                  <IconComponent size={36} />
                 </a>
               );
             })}
