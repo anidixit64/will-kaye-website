@@ -144,19 +144,40 @@ function Releases() {
         socialLinks={socialLinks}
       />
 
-      {/* Left Sidebar - Navigation */}
-      <div className="left-sidebar" style={{ zIndex: 10 }}>
-        <h3 className="sidebar-title">Pages</h3>
-        <div className="nav-list">
-          {navItems.map((item) => (
-            <Link 
-              key={item.path} 
-              to={item.path} 
-              className={`nav-item ${item.path === '/releases' ? 'active' : ''}`}
-            >
-              {item.label}
-            </Link>
-          ))}
+      {/* Top Navigation Bar */}
+      <div className="top-navbar" style={{ zIndex: 10 }}>
+        <div className="nav-section">
+          <div className="nav-list">
+            {navItems.map((item) => (
+              <Link 
+                key={item.path} 
+                to={item.path} 
+                className={`nav-item ${item.path === '/releases' ? 'active' : ''}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        
+        <div className="connect-section">
+          <div className="social-list">
+            {socialLinks.map((social) => {
+              const IconComponent = social.icon;
+              return (
+                <a 
+                  key={social.name} 
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="social-item"
+                  title={social.name}
+                >
+                  <IconComponent size={24} />
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -257,27 +278,6 @@ function Releases() {
         )}
       </div>
 
-      {/* Right Sidebar - Social Media */}
-      <div className="right-sidebar" style={{ zIndex: 10 }}>
-        <h3 className="sidebar-title">Connect</h3>
-        <div className="social-list">
-          {socialLinks.map((social) => {
-            const IconComponent = social.icon;
-            return (
-              <a 
-                key={social.name} 
-                href={social.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-item"
-              >
-                <IconComponent size={18} />
-                <span>{social.name}</span>
-              </a>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }

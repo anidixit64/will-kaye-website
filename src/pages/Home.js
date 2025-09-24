@@ -12,6 +12,8 @@ function Home() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showHeader, setShowHeader] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
@@ -28,6 +30,25 @@ function Home() {
 
     fetchSiteSettings();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        // Scrolling up or near top - show header
+        setShowHeader(true);
+      } else {
+        // Scrolling down - hide header
+        setShowHeader(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -66,10 +87,11 @@ function Home() {
     );
   }
 
-  const mainImageUrl = siteSettings?.mainPicture ? urlFor(siteSettings.mainPicture).width(600).url() : null;
+  const mainImageUrl = siteSettings?.mainPicture ? urlFor(siteSettings.mainPicture).width(1920).quality(90).url() : null;
   const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
 
   const navItems = [
+    { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
     { path: '/releases', label: 'Music' },
     { path: '/shows', label: 'Shows' },
@@ -128,84 +150,89 @@ function Home() {
         socialLinks={socialLinks}
       />
 
-      {/* Left Sidebar - Navigation */}
-      <div className="left-sidebar" style={{ zIndex: 10 }}>
-        <h3 className="sidebar-title">Pages</h3>
-        <div className="nav-list">
-          {navItems.map((item) => (
-            <Link key={item.path} to={item.path} className="nav-item">
-              {item.label}
-            </Link>
-          ))}
+      {/* Top Navigation Bar */}
+      <div className={`top-navbar ${showHeader ? 'visible' : 'hidden'}`}>
+        <div className="nav-section">
+          <div className="nav-list">
+            {navItems.map((item) => (
+              <Link 
+                key={item.path} 
+                to={item.path} 
+                className={`nav-item ${item.path === '/' ? 'active' : ''}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        
+        <div className="connect-section">
+          <div className="social-list">
+            {socialLinks.map((social) => {
+              const IconComponent = social.icon;
+              return (
+                <a 
+                  key={social.name} 
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="social-item"
+                  title={social.name}
+                >
+                  <IconComponent size={24} />
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <h1 className="main-title" style={{ zIndex: 10 }}>Will Kaye</h1>
-      
       {mainImageUrl && (
-        <div className="main-image-container" style={{ zIndex: 10 }}>
+        <div className="main-image-container">
           <img src={mainImageUrl} alt="Will Kaye" className="main-image" />
         </div>
       )}
       
-      <div className="bio-section" style={{ zIndex: 10 }}>
-        <p className="bio-text">
-          {siteSettings?.shortBio || 
-            'Musician, artist, and creative soul. Welcome to my musical journey.'}
-        </p>
-      </div>
+      {/* Content that appears after the image */}
+      <div className="content-after-image">
+        <div className="bio-section" style={{ zIndex: 10 }}>
+          <p className="bio-text">
+            {siteSettings?.shortBio || 
+              'Musician, artist, and creative soul. Welcome to my musical journey.'}
+          </p>
+        </div>
 
-      <div className="divider-bar" style={{ zIndex: 10 }}></div>
+        <div className="divider-bar" style={{ zIndex: 10 }}></div>
 
-      <div className="mailing-list-section" style={{ zIndex: 10 }}>
-        <form className="mailing-list-form" onSubmit={handleEmailSubmit}>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={handleEmailChange}
-            className="email-input"
-            required
-          />
-          <button type="submit" className="submit-button" disabled={isSubmitting}>
-            {isSubmitting ? 'Joining...' : 'Join Mailing List'}
-          </button>
-          {submitSuccess && (
-            <p style={{ 
-              color: '#7C898B', 
-              fontSize: '0.9rem',
-              fontFamily: 'Georgia, serif',
-              marginTop: '0.5rem',
-              textAlign: 'center'
-            }}>
-              Thank you for joining!
-            </p>
-          )}
-        </form>
-      </div>
-
-      {/* Right Sidebar - Social Media */}
-      <div className="right-sidebar" style={{ zIndex: 10 }}>
-        <h3 className="sidebar-title">Connect</h3>
-        <div className="social-list">
-          {socialLinks.map((social) => {
-            const IconComponent = social.icon;
-            return (
-              <a 
-                key={social.name} 
-                href={social.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-item"
-              >
-                <IconComponent size={18} />
-                <span>{social.name}</span>
-              </a>
-            );
-          })}
+        <div className="mailing-list-section" style={{ zIndex: 10 }}>
+          <form className="mailing-list-form" onSubmit={handleEmailSubmit}>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              className="email-input"
+              required
+            />
+            <button type="submit" className="submit-button" disabled={isSubmitting}>
+              {isSubmitting ? 'Joining...' : 'Join Mailing List'}
+            </button>
+            {submitSuccess && (
+              <p style={{ 
+                color: '#7C898B', 
+                fontSize: '0.9rem',
+                fontFamily: 'Georgia, serif',
+                marginTop: '0.5rem',
+                textAlign: 'center'
+              }}>
+                Thank you for joining!
+              </p>
+            )}
+          </form>
         </div>
       </div>
+
     </div>
   );
 }
