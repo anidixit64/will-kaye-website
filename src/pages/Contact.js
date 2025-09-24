@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { client, queries, urlFor } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
+import MobileNav from '../components/MobileNav';
 import '../styles/Home.css';
 
 function Contact() {
@@ -106,6 +107,14 @@ function Contact() {
           zIndex: 2
         }}
       />
+      
+      {/* Mobile Navigation */}
+      <MobileNav 
+        currentPath="/contact"
+        navItems={navItems}
+        socialLinks={socialLinks}
+      />
+
       {/* Left Sidebar - Navigation */}
       <div className="left-sidebar" style={{ zIndex: 10 }}>
         <h3 className="sidebar-title">Pages</h3>

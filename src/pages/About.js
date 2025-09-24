@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { client, queries, urlFor } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import { PortableText } from '@portabletext/react';
+import MobileNav from '../components/MobileNav';
 import '../styles/About.css';
 
 function About() {
@@ -114,6 +115,13 @@ function About() {
           backgroundColor: 'rgba(50, 34, 20, 0.70)', // More transparent dark overlay
           zIndex: 2
         }}
+      />
+      
+      {/* Mobile Navigation */}
+      <MobileNav 
+        currentPath="/about"
+        navItems={navItems}
+        socialLinks={socialLinks}
       />
 
       {/* Left Sidebar - Navigation */}

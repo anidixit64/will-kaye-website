@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { client } from '../lib/sanity';
 import { urlFor } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube, FaBandcamp } from 'react-icons/fa';
+import MobileNav from '../components/MobileNav';
 import '../styles/Music.css';
 
 function Releases() {
@@ -134,6 +135,13 @@ function Releases() {
           backgroundColor: 'rgba(50, 34, 20, 0.70)', // More transparent dark overlay
           zIndex: 2
         }}
+      />
+      
+      {/* Mobile Navigation */}
+      <MobileNav 
+        currentPath="/releases"
+        navItems={navItems}
+        socialLinks={socialLinks}
       />
 
       {/* Left Sidebar - Navigation */}
