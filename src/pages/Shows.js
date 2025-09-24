@@ -29,7 +29,8 @@ function Shows() {
             date,
             venue,
             city,
-            ticketLink
+            ticketLink,
+            venueImage
           }
         `);
         setShows(showsData);
@@ -171,9 +172,21 @@ function Shows() {
         {shows.length > 0 ? (
           shows.map((show) => (
             <div key={show._id} className="show-item">
-              <div className="show-info">
-                {/* Venue and City Section */}
-                <div className="show-main-info">
+              {/* Left half - Venue Image (if available) */}
+              {show.venueImage && (
+                <div className="show-image-section">
+                  <img 
+                    src={urlFor(show.venueImage).width(600).height(400).url()} 
+                    alt={show.venueImage.alt || show.venue || 'Venue image'} 
+                    className="show-venue-image"
+                  />
+                </div>
+              )}
+              
+              {/* Right half - Venue Info */}
+              <div className={`show-info-section ${!show.venueImage ? 'show-info-full' : ''}`}>
+                {/* Top half - Venue name and city */}
+                <div className="show-venue-info">
                   <h2 className="show-venue">
                     {show.venue || 'TBA'}
                   </h2>
@@ -184,43 +197,35 @@ function Shows() {
                   )}
                 </div>
                 
-                {/* Date and Time Section */}
-                <div className="show-datetime">
-                  <p className="show-date">
-                    {formatDate(show.date)}
-                  </p>
-                  <p className="show-time">
-                    {formatTime(show.date)}
-                  </p>
-                </div>
-                
-                {/* Ticket Link Section */}
-                <div className="show-links">
-                  {show.ticketLink && (
-                    <button 
-                      className="show-link tickets"
-                      onClick={() => handleTicketClick(show.ticketLink)}
-                    >
-                      🎫 Buy Tickets
-                    </button>
-                  )}
+                {/* Bottom half - Date, time, and ticket button */}
+                <div className="show-datetime-section">
+                  <div className="show-datetime">
+                    <p className="show-date">
+                      {formatDate(show.date)}
+                    </p>
+                    <p className="show-time">
+                      {formatTime(show.date)}
+                    </p>
+                  </div>
                   
-                  {!show.ticketLink && (
-                    <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
-                      Tickets coming soon
-                    </span>
-                  )}
+                  <div className="show-links">
+                    {show.ticketLink && (
+                      <button 
+                        className="show-link tickets"
+                        onClick={() => handleTicketClick(show.ticketLink)}
+                      >
+                        🎫 Buy Tickets
+                      </button>
+                    )}
+                    
+                    {!show.ticketLink && (
+                      <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
+                        Tickets coming soon
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              
-              {/* Venue Image */}
-              {show.venueImage && (
-                <img 
-                  src={urlFor(show.venueImage).width(400).height(300).url()} 
-                  alt={show.venueImage.alt || show.venue || 'Venue image'} 
-                  className="show-venue-image"
-                />
-              )}
             </div>
           ))
         ) : (
