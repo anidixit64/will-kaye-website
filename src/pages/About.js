@@ -269,6 +269,9 @@ function About() {
         </div>
       )}
 
+      {/* Horizontal bar between gallery and EPK button */}
+      <div className="divider-bar" style={{ zIndex: 10 }}></div>
+
       {/* EPK Button - Positioned halfway between gallery and bottom */}
       <div className="epk-section-spacer" style={{ zIndex: 10 }}>
         <button 
