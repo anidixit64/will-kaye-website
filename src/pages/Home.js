@@ -12,7 +12,7 @@ function Home() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
+  const [showHeader, setShowHeader] = useState(true); // Always true for testing
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -197,7 +197,7 @@ function Home() {
         </div>
         
         <div className="title-section">
-          <h1 className="header-title">Will Kaye</h1>
+          <img src="/willkayelogo.png" alt="Will Kaye" className="header-logo" />
         </div>
         
         <div className="connect-section">

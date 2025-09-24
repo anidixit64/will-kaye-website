@@ -243,7 +243,12 @@ html, body, #root {
 }
 
 .show-link.tickets {
-  background-color: rgba(184, 197, 166, 0.8) !important;
+  background-color: #636564 !important;
+  color: #243C4F !important;
+}
+
+.show-link.tickets:hover {
+  background-color: #7C898B !important;
   color: #243C4F !important;
 }
 
@@ -262,7 +267,7 @@ html, body, #root {
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 200px;
   background: linear-gradient(to bottom, 
     rgba(76, 68, 60, 0.4) 0%, 
     rgba(76, 68, 60, 0.3) 25%, 

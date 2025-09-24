@@ -263,7 +263,7 @@ html, body, #root {
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 200px;
   background: linear-gradient(to bottom, 
     rgba(76, 68, 60, 0.4) 0%, 
     rgba(76, 68, 60, 0.3) 25%, 

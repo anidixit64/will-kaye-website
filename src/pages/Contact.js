@@ -183,7 +183,7 @@ function Contact() {
         </div>
         
         <div className="title-section">
-          <h1 className="header-title">Will Kaye</h1>
+          <img src="/willkayelogo.png" alt="Will Kaye" className="header-logo" />
         </div>
         
         <div className="connect-section">
