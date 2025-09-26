@@ -24,6 +24,18 @@ html, body, #root {
   padding: 0;
 }
 
+/* Contact container - same responsive design as other pages */
+.contact-container {
+  min-height: 100vh;
+  background-color: rgba(36, 60, 79, 0.70) !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(200px, 25vh, 350px) clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem);
+}
+
 /* Hover zone for navbar */
 .home-container::before {
   content: '';
@@ -60,7 +72,7 @@ html, body, #root {
   color: #FAF9F6 !important;
   text-align: center;
   margin-bottom: 3rem;
-  margin-top: -2rem;
+  margin-top: 2rem;
   letter-spacing: 0.1em;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
@@ -178,6 +190,31 @@ html, body, #root {
   background-color: #7C898B !important;
   color: #FAF9F6 !important;
   transform: translateY(-2px);
+}
+
+/* Contact page specific styles */
+.contact-info-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contact-section-title {
+  color: #7C898B !important;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  margin-bottom: 1rem;
+  font-family: 'Unna', serif;
+  font-weight: 600;
+}
+
+.contact-email-text {
+  color: #93A3B1 !important;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  margin-bottom: 1rem;
+  font-family: 'Unna', serif;
+}
+
+.contact-button {
+  margin-bottom: 2rem;
 }
 
 /* Top Navigation Bar */
@@ -372,6 +409,10 @@ html, body, #root {
     width: 50%;
     max-width: 800px;
   }
+  
+  .contact-container {
+    padding: clamp(220px, 28vh, 400px) var(--space-2xl) var(--space-2xl);
+  }
 }
 
 /* Large screens - 1400px to 1919px */
@@ -391,6 +432,10 @@ html, body, #root {
   .divider-bar {
     width: 60%;
     max-width: 700px;
+  }
+  
+  .contact-container {
+    padding: clamp(200px, 25vh, 350px) var(--space-xl) var(--space-xl);
   }
 }
 
@@ -485,6 +530,10 @@ html, body, #root {
     padding: clamp(50vh, 60vh, 70vh) 1rem 1rem 1rem;
   }
   
+  .contact-container {
+    padding: clamp(180px, 20vh, 200px) 1rem 1rem;
+  }
+  
   .main-image-container {
     top: 0;
   }
@@ -527,6 +576,10 @@ html, body, #root {
   
   .home-container {
     padding: clamp(40vh, 50vh, 60vh) 1rem 1rem 1rem;
+  }
+  
+  .contact-container {
+    padding: clamp(160px, 18vh, 180px) 1rem 1rem;
   }
   
   .main-image-container {

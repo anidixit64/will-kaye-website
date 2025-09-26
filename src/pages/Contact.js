@@ -6,7 +6,7 @@ import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { PageSkeleton } from '../components/LoadingSkeleton';
-import '../styles/Home.css';
+import '../styles/About.css';
 
 function Contact() {
   const { siteSettings, loading, error } = useData();
@@ -70,30 +70,16 @@ function Contact() {
 
   if (error) {
     return (
-      <div 
-        className="contact-container"
-        style={{
-          minHeight: '100vh',
-          backgroundColor: 'rgba(36, 60, 79, 0.70)',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: '200px 2rem 2rem'
-        }}
-      >
-        <h1 className="contact-title">Contact</h1>
-        <div className="bio-section">
-          <p className="bio-text">
+      <div className="about-container">
+        <h1 className="about-title">Contact</h1>
+        <div className="about-content">
+          <p className="about-text">
             Failed to load contact information.
           </p>
         </div>
       </div>
     );
   }
-
-  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -112,22 +98,14 @@ function Contact() {
     { name: 'YouTube', url: '#', icon: FaYoutube },
   ];
 
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
+
   return (
     <ErrorBoundary>
       <div 
-        className="contact-container"
+        className="about-container"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={{
-          minHeight: '100vh',
-          backgroundColor: 'rgba(36, 60, 79, 0.70)',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: '200px 2rem 2rem'
-        }}
       >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
@@ -212,10 +190,12 @@ function Contact() {
       </div>
 
       {/* Main Content */}
-      <h1 className="contact-title" style={{ zIndex: 10 }}>Contact</h1>
+      <h1 className="about-title" style={{ zIndex: 10 }}>Contact</h1>
       
-      <div className="bio-section" style={{ zIndex: 10 }}>
-        <p className="bio-text">
+      <div className="divider-bar" style={{ zIndex: 10 }}></div>
+      
+      <div className="about-content" style={{ zIndex: 10 }}>
+        <p className="about-text">
           Get in touch for bookings, press inquiries, or just to say hello.
         </p>
       </div>
@@ -223,29 +203,18 @@ function Contact() {
       <div className="divider-bar" style={{ zIndex: 10 }}></div>
 
       {/* Contact Information */}
-      <div className="mailing-list-section" style={{ zIndex: 10 }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ 
-            color: '#7C898B', 
-            fontSize: '2rem', 
-            marginBottom: '1rem',
-            fontFamily: 'Unna, serif'
-          }}>
+      <div className="about-content" style={{ zIndex: 10 }}>
+        <div className="contact-info-section">
+          <h2 className="contact-section-title">
             General Contact
           </h2>
-          <p style={{ 
-            color: '#93A3B1', 
-            fontSize: '1.2rem', 
-            marginBottom: '1rem',
-            fontFamily: 'Unna, serif'
-          }}>
+          <p className="contact-email-text">
             {safeDataAccess.getText(siteSettings?.contactEmail, 'Contact email coming soon')}
           </p>
           {safeDataAccess.getText(siteSettings?.contactEmail) && (
             <button 
-              className="submit-button"
+              className="submit-button contact-button"
               onClick={() => handleEmailClick(siteSettings.contactEmail)}
-              style={{ marginBottom: '2rem' }}
             >
               Send Email
             </button>
@@ -253,27 +222,16 @@ function Contact() {
         </div>
 
         {safeDataAccess.getText(siteSettings?.bookingEmail) && (
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ 
-              color: '#7C898B', 
-              fontSize: '2rem', 
-              marginBottom: '1rem',
-              fontFamily: 'Unna, serif'
-            }}>
+          <div className="contact-info-section">
+            <h2 className="contact-section-title">
               Booking Inquiries
             </h2>
-            <p style={{ 
-              color: '#93A3B1', 
-              fontSize: '1.2rem', 
-              marginBottom: '1rem',
-              fontFamily: 'Unna, serif'
-            }}>
+            <p className="contact-email-text">
               {safeDataAccess.getText(siteSettings.bookingEmail)}
             </p>
             <button 
-              className="submit-button"
+              className="submit-button contact-button"
               onClick={() => handleEmailClick(siteSettings.bookingEmail)}
-              style={{ marginTop: '1.5rem' }}
             >
               Book Now
             </button>
