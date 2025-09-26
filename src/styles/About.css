@@ -609,12 +609,13 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1.5rem;
 }
 
 .contact-section-title {
   color: #7C898B !important;
   font-size: clamp(1.2rem, 2.5vw, 2rem);
-  margin-bottom: 1rem;
+  margin: 0;
   font-family: 'Unna', serif;
   font-weight: 600;
 }
@@ -622,12 +623,12 @@ html, body, #root {
 .contact-email-text {
   color: #93A3B1 !important;
   font-size: clamp(1rem, 2vw, 1.2rem);
-  margin-bottom: 1rem;
+  margin: 0;
   font-family: 'Unna', serif;
 }
 
 .contact-button {
-  margin-bottom: 2rem;
+  margin: 0;
   background-color: #636564 !important;
   color: #FAF9F6 !important;
   padding: 0.75rem 1rem;

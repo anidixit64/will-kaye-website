@@ -204,23 +204,6 @@ function Contact() {
 
       {/* Contact Information */}
       <div className="about-content" style={{ zIndex: 10 }}>
-        <div className="contact-info-section">
-          <h2 className="contact-section-title">
-            General Contact
-          </h2>
-          <p className="contact-email-text">
-            {safeDataAccess.getText(siteSettings?.contactEmail, 'Contact email coming soon')}
-          </p>
-          {safeDataAccess.getText(siteSettings?.contactEmail) && (
-            <button 
-              className="submit-button contact-button"
-              onClick={() => handleEmailClick(siteSettings.contactEmail)}
-            >
-              Send Email
-            </button>
-          )}
-        </div>
-
         {safeDataAccess.getText(siteSettings?.bookingEmail) && (
           <div className="contact-info-section">
             <h2 className="contact-section-title">
