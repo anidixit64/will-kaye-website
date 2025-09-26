@@ -117,6 +117,11 @@ html, body, #root {
   height: clamp(150px, 15vh, 250px);
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.gallery-item:hover .gallery-image {
+  filter: brightness(1.1);
 }
 
 /* EPK Download section */

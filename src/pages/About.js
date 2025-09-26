@@ -7,6 +7,7 @@ import { PortableText } from '@portabletext/react';
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
+import GalleryModal from '../components/GalleryModal';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/About.css';
 
@@ -15,6 +16,8 @@ function About() {
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  const [galleryModalOpen, setGalleryModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -72,6 +75,30 @@ function About() {
       link.click();
       document.body.removeChild(link);
     }
+  };
+
+  // Gallery modal handlers
+  const handleImageClick = (index) => {
+    setCurrentImageIndex(index);
+    setGalleryModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setGalleryModalOpen(false);
+  };
+
+  const handleNextImage = () => {
+    const galleryImages = siteSettings?.galleryImages || [];
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === galleryImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePreviousImage = () => {
+    const galleryImages = siteSettings?.galleryImages || [];
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
+    );
   };
 
   if (loading) {
@@ -227,7 +254,12 @@ function About() {
             {safeDataAccess.getArray(siteSettings?.gallery).map((image, index) => {
               const imageUrl = safeDataAccess.getImageUrl(image, 600);
               return imageUrl ? (
-                <div key={index} className="gallery-item">
+                <div 
+                  key={index} 
+                  className="gallery-item"
+                  onClick={() => handleImageClick(index)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <OptimizedImage 
                     src={imageUrl} 
                     alt={`Gallery image ${index + 1}`}
@@ -267,6 +299,17 @@ function About() {
           Download EPK
         </button>
       </div>
+
+      {/* Gallery Modal */}
+      {galleryModalOpen && (
+        <GalleryModal
+          images={safeDataAccess.getArray(siteSettings?.gallery)}
+          currentIndex={currentImageIndex}
+          onClose={handleCloseModal}
+          onNext={handleNextImage}
+          onPrevious={handlePreviousImage}
+        />
+      )}
 
       </div>
     </ErrorBoundary>
