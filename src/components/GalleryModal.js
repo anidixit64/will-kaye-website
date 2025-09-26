@@ -41,6 +41,26 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
 
   const currentImage = images[currentIndex];
   const imageUrl = urlFor(currentImage).width(1200).quality(90).url();
+  
+  // Preload next and previous images for faster navigation
+  const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+  const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+  
+  const nextImageUrl = urlFor(images[nextIndex]).width(1200).quality(90).url();
+  const prevImageUrl = urlFor(images[prevIndex]).width(1200).quality(90).url();
+  
+  // Preload images
+  React.useEffect(() => {
+    const preloadImage = (url) => {
+      const img = new Image();
+      img.src = url;
+    };
+    
+    if (images.length > 1) {
+      preloadImage(nextImageUrl);
+      preloadImage(prevImageUrl);
+    }
+  }, [currentIndex, nextImageUrl, prevImageUrl, images.length]);
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
