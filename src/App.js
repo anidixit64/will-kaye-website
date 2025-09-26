@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
 import { PageSkeleton } from './components/LoadingSkeleton';
+import ScrollToTop from './components/ScrollToTop';
 
 // Lazy load pages for code splitting
 const Home = React.lazy(() => import('./pages/Home'));
@@ -14,6 +15,7 @@ function App() {
   return (
     <DataProvider>
       <Router>
+        <ScrollToTop />
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
             <Route path="/" element={<Home />} />
