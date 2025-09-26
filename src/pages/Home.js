@@ -6,6 +6,7 @@ import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
+import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Home.css';
 
@@ -316,6 +317,7 @@ function Home() {
         </div>
       </div>
 
+      <Footer />
       </div>
     </ErrorBoundary>
   );

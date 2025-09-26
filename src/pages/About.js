@@ -8,6 +8,7 @@ import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
 import GalleryModal from '../components/GalleryModal';
+import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/About.css';
 
@@ -311,6 +312,7 @@ function About() {
         />
       )}
 
+      <Footer />
       </div>
     </ErrorBoundary>
   );

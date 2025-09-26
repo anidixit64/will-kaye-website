@@ -6,6 +6,7 @@ import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube, FaBan
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
+import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Music.css';
 
@@ -290,6 +291,7 @@ function Releases() {
         )}
       </div>
 
+      <Footer />
       </div>
     </ErrorBoundary>
   );

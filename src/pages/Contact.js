@@ -5,6 +5,7 @@ import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
+import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/About.css';
 
@@ -222,6 +223,7 @@ function Contact() {
         )}
       </div>
 
+      <Footer />
       </div>
     </ErrorBoundary>
   );
