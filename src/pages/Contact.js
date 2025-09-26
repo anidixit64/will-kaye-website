@@ -194,8 +194,8 @@ function Contact() {
       
       <div className="divider-bar" style={{ zIndex: 10 }}></div>
       
-      <div className="about-content" style={{ zIndex: 10 }}>
-        <p className="about-text">
+      <div className="about-content" style={{ zIndex: 10, textAlign: 'center' }}>
+        <p className="about-text" style={{ textAlign: 'center' }}>
           Get in touch for bookings, press inquiries, or just to say hello.
         </p>
       </div>
