@@ -1,54 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { client } from '../lib/sanity';
-import { urlFor } from '../lib/sanity';
+import { useData } from '../context/DataContext';
+import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube, FaBandcamp } from 'react-icons/fa';
 import MobileNav from '../components/MobileNav';
+import ErrorBoundary from '../components/ErrorBoundary';
+import OptimizedImage from '../components/OptimizedImage';
+import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Music.css';
 
 function Releases() {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [releases, setReleases] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { siteSettings, releases, loading, error } = useData();
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch site settings for background image
-        const siteData = await client.fetch(`
-          *[_type == "siteSettings"][0] {
-            backgroundImage
-          }
-        `);
-        setSiteSettings(siteData);
-
-        // Fetch all releases sorted by release date (newest first)
-        const releasesData = await client.fetch(`
-          *[_type == "release"] | order(releaseDate desc) {
-            _id,
-            title,
-            releaseDate,
-            albumCover,
-            streamLink,
-            buyLink,
-            lyricsLink
-          }
-        `);
-        setReleases(releasesData);
-      } catch (err) {
-        setError('Failed to load content');
-        console.error('Error fetching data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -90,27 +55,18 @@ function Releases() {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'TBA';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
+    return safeDataAccess.formatDate(dateString, 'TBA');
   };
 
   const handleLinkClick = (url) => {
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    const validUrl = safeDataAccess.getUrl(url);
+    if (validUrl) {
+      window.open(validUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
   if (loading) {
-    return (
-      <div className="music-container">
-        <div style={{ fontSize: '1.5rem', color: '#7C898B' }}>Loading...</div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (error) {
@@ -124,7 +80,7 @@ function Releases() {
     );
   }
 
-  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -144,11 +100,12 @@ function Releases() {
   ];
 
   return (
-    <div 
-      className="music-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <ErrorBoundary>
+      <div 
+        className="music-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -243,32 +200,37 @@ function Releases() {
             <div key={release._id} className="release-item">
               {/* Left side - Square album cover */}
               <div className="release-cover">
-                {release.albumCover ? (
-                  <img 
-                    src={urlFor(release.albumCover).width(400).url()} 
-                    alt={`${release.title} album cover`}
-                  />
-                ) : (
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: '#636564',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#322214',
-                    fontSize: '1.2rem',
-                    fontFamily: 'Unna, serif'
-                  }}>
-                    TBA
-                  </div>
-                )}
+                {(() => {
+                  const imageUrl = safeDataAccess.getImageUrl(release.albumCover, 400);
+                  return imageUrl ? (
+                    <OptimizedImage 
+                      src={imageUrl} 
+                      alt={`${safeDataAccess.getText(release.title, 'Release')} album cover`}
+                      width="100%"
+                      height="100%"
+                    />
+                  ) : (
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#636564',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#322214',
+                      fontSize: '1.2rem',
+                      fontFamily: 'Unna, serif'
+                    }}>
+                      TBA
+                    </div>
+                  );
+                })()}
               </div>
               
               {/* Middle - Album name and release date */}
               <div className="release-info">
                 <h2 className="release-title">
-                  {release.title || 'TBA'}
+                  {safeDataAccess.getText(release.title, 'TBA')}
                 </h2>
                 <p className="release-date">
                   {formatDate(release.releaseDate)}
@@ -277,7 +239,7 @@ function Releases() {
               
               {/* Right side - Vertical column of action buttons */}
               <div className="release-actions">
-                {release.streamLink && (
+                {safeDataAccess.getUrl(release.streamLink) && (
                   <button 
                     className="release-action stream"
                     onClick={() => handleLinkClick(release.streamLink)}
@@ -289,7 +251,7 @@ function Releases() {
                   </button>
                 )}
                 
-                {release.buyLink && (
+                {safeDataAccess.getUrl(release.buyLink) && (
                   <button 
                     className="release-action buy"
                     onClick={() => handleLinkClick(release.buyLink)}
@@ -301,7 +263,7 @@ function Releases() {
                   </button>
                 )}
                 
-                {release.lyricsLink && (
+                {safeDataAccess.getUrl(release.lyricsLink) && (
                   <button 
                     className="release-action lyrics"
                     onClick={() => handleLinkClick(release.lyricsLink)}
@@ -313,7 +275,7 @@ function Releases() {
                   </button>
                 )}
                 
-                {!release.streamLink && !release.buyLink && !release.lyricsLink && (
+                {!safeDataAccess.getUrl(release.streamLink) && !safeDataAccess.getUrl(release.buyLink) && !safeDataAccess.getUrl(release.lyricsLink) && (
                   <div className="no-actions">
                     <span>Links coming soon</span>
                   </div>
@@ -328,7 +290,8 @@ function Releases() {
         )}
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

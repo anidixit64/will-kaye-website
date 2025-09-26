@@ -1,53 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { client } from '../lib/sanity';
-import { urlFor } from '../lib/sanity';
+import { useData } from '../context/DataContext';
+import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import MobileNav from '../components/MobileNav';
+import ErrorBoundary from '../components/ErrorBoundary';
+import OptimizedImage from '../components/OptimizedImage';
+import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Shows.css';
 
 function Shows() {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [shows, setShows] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { siteSettings, shows, loading, error } = useData();
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch site settings for background image
-        const siteData = await client.fetch(`
-          *[_type == "siteSettings"][0] {
-            backgroundImage
-          }
-        `);
-        setSiteSettings(siteData);
-
-        // Fetch all shows sorted by date (newest first)
-        const showsData = await client.fetch(`
-          *[_type == "show"] | order(date desc) {
-            _id,
-            date,
-            venue,
-            city,
-            ticketLink,
-            venueImage
-          }
-        `);
-        setShows(showsData);
-      } catch (err) {
-        setError('Failed to load content');
-        console.error('Error fetching data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -89,38 +55,22 @@ function Shows() {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'TBA';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric'
-    });
+    return safeDataAccess.formatDate(dateString, 'TBA');
   };
 
   const formatTime = (dateString) => {
-    if (!dateString) return 'TBA';
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    });
+    return safeDataAccess.formatTime(dateString, 'TBA');
   };
 
   const handleTicketClick = (url) => {
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    const validUrl = safeDataAccess.getUrl(url);
+    if (validUrl) {
+      window.open(validUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
   if (loading) {
-    return (
-      <div className="shows-container">
-        <div style={{ fontSize: '1.5rem', color: '#7C898B' }}>Loading...</div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (error) {
@@ -134,7 +84,7 @@ function Shows() {
     );
   }
 
-  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -154,11 +104,12 @@ function Shows() {
   ];
 
   return (
-    <div 
-      className="shows-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <ErrorBoundary>
+      <div 
+        className="shows-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -254,11 +205,18 @@ function Shows() {
               {/* Left half - Venue Image (if available) */}
               {show.venueImage && (
                 <div className="show-image-section">
-                  <img 
-                    src={urlFor(show.venueImage).width(600).height(400).url()} 
-                    alt={show.venueImage.alt || show.venue || 'Venue image'} 
-                    className="show-venue-image"
-                  />
+                  {(() => {
+                    const imageUrl = safeDataAccess.getImageUrl(show.venueImage, 600, 400);
+                    return imageUrl ? (
+                      <OptimizedImage 
+                        src={imageUrl} 
+                        alt={show.venueImage.alt || show.venue || 'Venue image'} 
+                        className="show-venue-image"
+                        width="100%"
+                        height="400px"
+                      />
+                    ) : null;
+                  })()}
                 </div>
               )}
               
@@ -267,11 +225,11 @@ function Shows() {
                 {/* Top half - Venue name and city */}
                 <div className="show-venue-info">
                   <h2 className="show-venue">
-                    {show.venue || 'TBA'}
+                    {safeDataAccess.getText(show.venue, 'TBA')}
                   </h2>
                   {show.city && (
                     <p className="show-city">
-                      {show.city}
+                      {safeDataAccess.getText(show.city)}
                     </p>
                   )}
                 </div>
@@ -288,7 +246,7 @@ function Shows() {
                   </div>
                   
                   <div className="show-links">
-                    {show.ticketLink && (
+                    {safeDataAccess.getUrl(show.ticketLink) && (
                       <button 
                         className="show-link tickets"
                         onClick={() => handleTicketClick(show.ticketLink)}
@@ -297,7 +255,7 @@ function Shows() {
                       </button>
                     )}
                     
-                    {!show.ticketLink && (
+                    {!safeDataAccess.getUrl(show.ticketLink) && (
                       <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
                         Tickets coming soon
                       </span>
@@ -314,7 +272,8 @@ function Shows() {
         )}
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

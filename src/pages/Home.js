@@ -1,33 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { client, queries, urlFor } from '../lib/sanity';
+import { useData } from '../context/DataContext';
+import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import MobileNav from '../components/MobileNav';
+import ErrorBoundary from '../components/ErrorBoundary';
+import OptimizedImage from '../components/OptimizedImage';
+import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Home.css';
 
 function Home() {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showHeader, setShowHeader] = useState(true); // Always true for testing
+  const { siteSettings, loading, error } = useData();
+  const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const fetchSiteSettings = async () => {
-      try {
-        const data = await client.fetch(queries.siteSettings);
-        setSiteSettings(data);
-      } catch (err) {
-        setError('Failed to load content');
-        console.error('Error fetching site settings:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSiteSettings();
-  }, []);
+  const [layloLoaded, setLayloLoaded] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -75,11 +62,7 @@ function Home() {
 
 
   if (loading) {
-    return (
-      <div className="home-container">
-        <div style={{ fontSize: '1.5rem', color: '#4C443C' }}>Loading...</div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (error) {
@@ -95,8 +78,8 @@ function Home() {
     );
   }
 
-  const mainImageUrl = siteSettings?.mainPicture ? urlFor(siteSettings.mainPicture).width(1920).quality(90).url() : null;
-  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+  const mainImageUrl = safeDataAccess.getImageUrl(siteSettings?.mainPicture, 1920);
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -116,11 +99,12 @@ function Home() {
   ];
 
   return (
-    <div 
-      className="home-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <ErrorBoundary>
+      <div 
+        className="home-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -206,7 +190,12 @@ function Home() {
       {/* Main Content */}
       {mainImageUrl && (
         <div className="main-image-container">
-          <img src={mainImageUrl} alt="Will Kaye" className="main-image" />
+          <OptimizedImage 
+            src={mainImageUrl} 
+            alt="Will Kaye" 
+            className="main-image"
+            priority={true}
+          />
         </div>
       )}
       
@@ -214,49 +203,121 @@ function Home() {
       <div className="content-after-image">
         <div className="bio-section" style={{ zIndex: 10 }}>
           <p className="bio-text">
-            {siteSettings?.shortBio || 
-              'Musician, artist, and creative soul. Welcome to my musical journey.'}
+            {safeDataAccess.getText(siteSettings?.shortBio, 
+              'Musician, artist, and creative soul. Welcome to my musical journey.')}
           </p>
         </div>
 
         <div className="divider-bar" style={{ zIndex: 10 }}></div>
 
         <div className="mailing-list-section" style={{ zIndex: 10 }}>
-          <div style={{ 
-            backgroundColor: 'rgba(76, 68, 60, 0.7)', 
-            padding: '2rem', 
-            borderRadius: '8px',
+          <h2 style={{
+            color: '#FAF9F6',
+            fontSize: '2rem',
+            fontFamily: 'Unna, serif',
             textAlign: 'center',
-            marginBottom: '1rem'
+            marginBottom: '2rem',
+            fontWeight: '700'
           }}>
-            <p style={{ color: '#FAF9F6', fontSize: '1.2rem', marginBottom: '1rem' }}>
-              Join the mailing list
-            </p>
-          </div>
-          <iframe 
-            id="laylo-drop-hgTsE"
-            frameBorder="0"
-            scrolling="no"
-            allow="web-share"
-            allowTransparency="true"
-            style={{
-              width: '100%',
-              minWidth: '300px',
-              maxWidth: '600px',
-              height: '200px',
-              border: 'none',
+            Sign up for my Mailing List
+          </h2>
+          <div style={{ position: 'relative' }}>
+            <iframe 
+              id="laylo-drop-hgTsE"
+              frameBorder="0"
+              scrolling="no"
+              allow="web-share"
+              allowTransparency="true"
+              style={{
+                width: '100%',
+                minWidth: '300px',
+                maxWidth: '1000px',
+                height: '200px',
+                border: '1px solid rgba(250, 249, 246, 0.3)',
+                borderRadius: '8px',
+                display: 'block',
+                margin: '0 auto',
+                backgroundColor: 'rgba(76, 68, 60, 0.3)'
+              }}
+              src="https://embed.laylo.com?dropId=hgTsE&color=0000FF&minimal=false&theme=light"
+              title="Laylo Email Signup"
+              onLoad={() => {
+                console.log('Laylo iframe loaded');
+                // Check if iframe has content after a delay
+                setTimeout(() => {
+                  const iframe = document.getElementById('laylo-drop-hgTsE');
+                  if (iframe) {
+                    try {
+                      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                      console.log('Iframe content:', iframeDoc.body?.innerHTML || 'No content');
+                    } catch (e) {
+                      console.log('Cannot access iframe content (CORS):', e.message);
+                    }
+                  }
+                }, 2000);
+              }}
+              onError={() => {
+                console.log('Laylo iframe failed to load');
+              }}
+            />
+            
+            {/* Debug overlay */}
+            <div style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              color: '#FAF9F6',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              fontSize: '0.8rem',
+              zIndex: 10
+            }}>
+              Debug: Iframe loaded
+            </div>
+            
+            {/* Fallback message if no content */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: 'rgba(76, 68, 60, 0.9)',
+              color: '#FAF9F6',
+              padding: '1rem',
               borderRadius: '8px',
-              display: 'block',
-              margin: '0 auto',
-              backgroundColor: 'transparent'
-            }}
-            src="https://embed.laylo.com?dropId=hgTsE&color=0000FF&minimal=false&theme=light"
-            title="Laylo Email Signup"
-          />
+              textAlign: 'center',
+              fontSize: '0.9rem',
+              zIndex: 5
+            }}>
+              <p style={{ margin: '0 0 1rem 0' }}>
+                Laylo embed not showing content
+              </p>
+              <p style={{ margin: '0 0 1rem 0', fontSize: '0.8rem', opacity: 0.8 }}>
+                Drop ID: hgTsE
+              </p>
+              <a 
+                href="https://laylo.com/hgTsE" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  color: '#FAF9F6',
+                  textDecoration: 'underline',
+                  backgroundColor: 'rgba(99, 101, 100, 0.8)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '4px',
+                  display: 'inline-block'
+                }}
+              >
+                Try Direct Link
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

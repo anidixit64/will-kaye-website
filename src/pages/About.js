@@ -1,34 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { client, queries, urlFor } from '../lib/sanity';
+import { useData } from '../context/DataContext';
+import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import { PortableText } from '@portabletext/react';
 import MobileNav from '../components/MobileNav';
+import ErrorBoundary from '../components/ErrorBoundary';
+import OptimizedImage from '../components/OptimizedImage';
+import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/About.css';
 
 function About() {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { siteSettings, loading, error } = useData();
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const fetchSiteSettings = async () => {
-      try {
-        const data = await client.fetch(queries.siteSettings);
-        setSiteSettings(data);
-      } catch (err) {
-        setError('Failed to load content');
-        console.error('Error fetching site settings:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSiteSettings();
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -89,11 +75,7 @@ function About() {
   };
 
   if (loading) {
-    return (
-      <div className="about-container">
-        <div style={{ fontSize: '1.5rem', color: '#7C898B' }}>Loading...</div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (error) {
@@ -126,14 +108,15 @@ function About() {
     { name: 'YouTube', url: '#', icon: FaYoutube },
   ];
 
-  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   return (
-    <div 
-      className="about-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <ErrorBoundary>
+      <div 
+        className="about-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -222,13 +205,11 @@ function About() {
       <div className="divider-bar" style={{ zIndex: 10 }}></div>
       
       <div className="about-content" style={{ zIndex: 10 }}>
-        {siteSettings?.longBio && (
+        {siteSettings?.longBio && Array.isArray(siteSettings.longBio) && siteSettings.longBio.length > 0 ? (
           <div className="about-text">
             <PortableText value={siteSettings.longBio} />
           </div>
-        )}
-        
-        {!siteSettings?.longBio && (
+        ) : (
           <p className="about-text">
             Welcome to the story behind the music. Will Kaye's journey through the world of sound and storytelling.
             From humble beginnings to creating music that touches the soul, Will has dedicated his life to the craft 
@@ -239,25 +220,30 @@ function About() {
       </div>
 
       {/* Gallery Section */}
-      {siteSettings?.gallery && siteSettings.gallery.length > 0 && (
+      {safeDataAccess.getArray(siteSettings?.gallery).length > 0 && (
         <div className="gallery-section" style={{ zIndex: 10 }}>
           <h2 className="gallery-title">Gallery</h2>
           <div className="gallery-grid">
-            {siteSettings.gallery.map((image, index) => (
-              <div key={index} className="gallery-item">
-                <img 
-                  src={urlFor(image).width(600).url()} 
-                  alt={`Gallery image ${index + 1}`}
-                  className="gallery-image"
-                />
-              </div>
-            ))}
+            {safeDataAccess.getArray(siteSettings?.gallery).map((image, index) => {
+              const imageUrl = safeDataAccess.getImageUrl(image, 600);
+              return imageUrl ? (
+                <div key={index} className="gallery-item">
+                  <OptimizedImage 
+                    src={imageUrl} 
+                    alt={`Gallery image ${index + 1}`}
+                    className="gallery-image"
+                    width="100%"
+                    height="300px"
+                  />
+                </div>
+              ) : null;
+            })}
           </div>
         </div>
       )}
 
       {/* EPK Download Section - Standalone if no gallery */}
-      {(!siteSettings?.gallery || siteSettings.gallery.length === 0) && siteSettings?.epkFile && (
+      {safeDataAccess.getArray(siteSettings?.gallery).length === 0 && siteSettings?.epkFile?.url && (
         <div className="epk-section" style={{ zIndex: 10 }}>
           <h2 className="epk-title">Electronic Press Kit</h2>
           <button 
@@ -282,7 +268,8 @@ function About() {
         </button>
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

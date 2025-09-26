@@ -63,7 +63,7 @@ html, body, #root {
   max-width: 600px;
   height: 2px;
   background-color: #636564;
-  margin: 2rem auto 4rem;
+  margin: 1rem auto 1rem;
   z-index: 10;
   position: relative;
 }
@@ -71,7 +71,7 @@ html, body, #root {
 /* Gallery section */
 .gallery-section {
   max-width: 1000px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 1rem;
   z-index: 10;
   position: relative;
 }
@@ -137,7 +137,7 @@ html, body, #root {
 /* EPK section spacer - positioned halfway between gallery and bottom */
 .epk-section-spacer {
   text-align: center;
-  margin: 8rem auto;
+  margin: 1rem auto;
   z-index: 10;
   position: relative;
   display: flex;

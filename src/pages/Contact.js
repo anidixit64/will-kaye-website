@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { client, queries, urlFor } from '../lib/sanity';
+import { useData } from '../context/DataContext';
+import { safeDataAccess } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import MobileNav from '../components/MobileNav';
+import ErrorBoundary from '../components/ErrorBoundary';
+import { PageSkeleton } from '../components/LoadingSkeleton';
 import '../styles/Home.css';
 
 function Contact() {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { siteSettings, loading, error } = useData();
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const fetchSiteSettings = async () => {
-      try {
-        const data = await client.fetch(queries.siteSettings);
-        setSiteSettings(data);
-      } catch (err) {
-        setError('Failed to load content');
-        console.error('Error fetching site settings:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSiteSettings();
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -80,17 +65,25 @@ function Contact() {
   };
 
   if (loading) {
-    return (
-      <div className="home-container">
-        <div style={{ fontSize: '1.5rem', color: '#4C443C' }}>Loading...</div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="home-container">
-        <h1 className="main-title">Contact</h1>
+      <div 
+        className="contact-container"
+        style={{
+          minHeight: '100vh',
+          backgroundColor: 'rgba(36, 60, 79, 0.85)',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: '200px 2rem 2rem'
+        }}
+      >
+        <h1 className="contact-title">Contact</h1>
         <div className="bio-section">
           <p className="bio-text">
             Failed to load contact information.
@@ -100,7 +93,7 @@ function Contact() {
     );
   }
 
-  const backgroundImageUrl = siteSettings?.backgroundImage ? urlFor(siteSettings.backgroundImage).width(1920).url() : null;
+  const backgroundImageUrl = safeDataAccess.getImageUrl(siteSettings?.backgroundImage, 1920);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -120,11 +113,22 @@ function Contact() {
   ];
 
   return (
-    <div 
-      className="home-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <ErrorBoundary>
+      <div 
+        className="contact-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          minHeight: '100vh',
+          backgroundColor: 'rgba(36, 60, 79, 0.85)',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: '200px 2rem 2rem'
+        }}
+      >
       {/* Background image with transparency overlay */}
       {backgroundImageUrl && (
         <div 
@@ -208,7 +212,7 @@ function Contact() {
       </div>
 
       {/* Main Content */}
-      <h1 className="main-title" style={{ zIndex: 10 }}>Contact</h1>
+      <h1 className="contact-title" style={{ zIndex: 10 }}>Contact</h1>
       
       <div className="bio-section" style={{ zIndex: 10 }}>
         <p className="bio-text">
@@ -235,9 +239,9 @@ function Contact() {
             marginBottom: '1rem',
             fontFamily: 'Unna, serif'
           }}>
-            {siteSettings?.contactEmail || 'Contact email coming soon'}
+            {safeDataAccess.getText(siteSettings?.contactEmail, 'Contact email coming soon')}
           </p>
-          {siteSettings?.contactEmail && (
+          {safeDataAccess.getText(siteSettings?.contactEmail) && (
             <button 
               className="submit-button"
               onClick={() => handleEmailClick(siteSettings.contactEmail)}
@@ -248,7 +252,7 @@ function Contact() {
           )}
         </div>
 
-        {siteSettings?.bookingEmail && (
+        {safeDataAccess.getText(siteSettings?.bookingEmail) && (
           <div style={{ textAlign: 'center' }}>
             <h2 style={{ 
               color: '#7C898B', 
@@ -264,7 +268,7 @@ function Contact() {
               marginBottom: '1rem',
               fontFamily: 'Unna, serif'
             }}>
-              {siteSettings.bookingEmail}
+              {safeDataAccess.getText(siteSettings.bookingEmail)}
             </p>
             <button 
               className="submit-button"
@@ -276,7 +280,8 @@ function Contact() {
         )}
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

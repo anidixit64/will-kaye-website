@@ -52,6 +52,21 @@ html, body, #root {
   position: relative;
 }
 
+/* Contact title - matches other page titles */
+.contact-title {
+  font-family: 'Unna', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #FAF9F6 !important;
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: -2rem;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
 /* Main image container */
 .main-image-container {
   width: 100vw;
@@ -434,4 +449,17 @@ html, body, #root {
     radial-gradient(circle at 80% 20%, rgba(76, 68, 60, 0.03) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
+}
+
+/* Contact title responsive styles */
+@media (max-width: 1400px) {
+  .contact-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .contact-title {
+    font-size: 2.5rem;
+  }
 }
