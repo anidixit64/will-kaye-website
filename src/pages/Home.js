@@ -9,9 +9,6 @@ function Home() {
   const [siteSettings, setSiteSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [showHeader, setShowHeader] = useState(true); // Always true for testing
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
@@ -76,21 +73,6 @@ function Home() {
     }
   };
 
-  const handleEmailSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate mailing list signup (replace with actual service)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setEmail('');
-    }, 2000);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
 
   if (loading) {
     return (
@@ -240,30 +222,37 @@ function Home() {
         <div className="divider-bar" style={{ zIndex: 10 }}></div>
 
         <div className="mailing-list-section" style={{ zIndex: 10 }}>
-          <form className="mailing-list-form" onSubmit={handleEmailSubmit}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={handleEmailChange}
-              className="email-input"
-              required
-            />
-            <button type="submit" className="submit-button" disabled={isSubmitting}>
-              {isSubmitting ? 'Joining...' : 'Join Mailing List'}
-            </button>
-            {submitSuccess && (
-              <p style={{ 
-                color: '#7C898B', 
-                fontSize: '0.9rem',
-                fontFamily: 'Georgia, serif',
-                marginTop: '0.5rem',
-                textAlign: 'center'
-              }}>
-                Thank you for joining!
-              </p>
-            )}
-          </form>
+          <div style={{ 
+            backgroundColor: 'rgba(76, 68, 60, 0.7)', 
+            padding: '2rem', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            marginBottom: '1rem'
+          }}>
+            <p style={{ color: '#FAF9F6', fontSize: '1.2rem', marginBottom: '1rem' }}>
+              Join the mailing list
+            </p>
+          </div>
+          <iframe 
+            id="laylo-drop-hgTsE"
+            frameBorder="0"
+            scrolling="no"
+            allow="web-share"
+            allowTransparency="true"
+            style={{
+              width: '100%',
+              minWidth: '300px',
+              maxWidth: '600px',
+              height: '200px',
+              border: 'none',
+              borderRadius: '8px',
+              display: 'block',
+              margin: '0 auto',
+              backgroundColor: 'transparent'
+            }}
+            src="https://embed.laylo.com?dropId=hgTsE&color=0000FF&minimal=false&theme=light"
+            title="Laylo Email Signup"
+          />
         </div>
       </div>
 

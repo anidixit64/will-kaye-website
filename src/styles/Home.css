@@ -6,7 +6,7 @@
 /* Force background colors - highest specificity */
 html, body, #root {
   background-color: rgba(36, 60, 79, 0.85) !important;
-  color: #243C4F !important;
+  color: #FAF9F6 !important;
   margin: 0;
   padding: 0;
   font-family: 'Unna', serif;
@@ -42,7 +42,7 @@ html, body, #root {
   font-family: 'Unna', serif;
   font-size: 6rem;
   font-weight: 700;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   text-align: center;
   margin-bottom: 1rem;
   margin-top: -2rem;
@@ -94,7 +94,7 @@ html, body, #root {
 
 .bio-text {
   font-size: 1.8rem;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   font-family: 'Unna', serif;
   line-height: 1.8;
 }
@@ -112,7 +112,7 @@ html, body, #root {
 
 /* Mailing list section */
 .mailing-list-section {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto 6rem;
   padding: 0 2rem 4rem;
   z-index: 10;
@@ -127,27 +127,27 @@ html, body, #root {
 
 .email-input {
   padding: 0.75rem 1rem;
-  border: 2px solid #7C898B;
+  border: 2px solid #FAF9F6;
   border-radius: 8px;
   font-size: 1.8rem;
   font-family: 'Unna', serif;
   background-color: rgba(76, 68, 60, 0.7) !important;
-  color: #93A3B1 !important;
+  color: #FAF9F6 !important;
   transition: border-color 0.3s ease;
 }
 
 .email-input:focus {
   outline: none;
-  border-color: #93A3B1;
+  border-color: #FAF9F6;
 }
 
 .email-input::placeholder {
-  color: #93A3B1;
+  color: #FAF9F6;
 }
 
 .submit-button {
   background-color: #636564 !important;
-  color: #243C4F !important;
+  color: #FAF9F6 !important;
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 8px;
@@ -159,7 +159,7 @@ html, body, #root {
 
 .submit-button:hover {
   background-color: #7C898B !important;
-  color: #243C4F !important;
+  color: #FAF9F6 !important;
   transform: translateY(-2px);
 }
 
@@ -170,8 +170,8 @@ html, body, #root {
   left: 0;
   right: 0;
   height: 200px;
-  background-color: rgba(36, 60, 79, 0.95) !important;
-  background: rgba(36, 60, 79, 0.95) !important;
+  background-color: rgba(36, 60, 79, 0.6) !important;
+  background: rgba(36, 60, 79, 0.6) !important;
   backdrop-filter: blur(15px) saturate(1.4);
   display: flex;
   justify-content: space-between;
@@ -189,8 +189,8 @@ html, body, #root {
 .top-navbar.visible {
   opacity: 1 !important;
   transform: translateY(0) !important;
-  background-color: rgba(36, 60, 79, 0.95) !important;
-  background: rgba(36, 60, 79, 0.95) !important;
+  background-color: rgba(36, 60, 79, 0.6) !important;
+  background: rgba(36, 60, 79, 0.6) !important;
   visibility: visible !important;
 }
 
@@ -253,7 +253,7 @@ html, body, #root {
 .navbar-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   margin: 0;
   font-family: 'Unna', serif;
   position: relative;
@@ -266,7 +266,7 @@ html, body, #root {
   left: 0;
   width: 20px;
   height: 1px;
-  background-color: #7C898B;
+  background-color: #FAF9F6;
 }
 
 .nav-list {
@@ -278,7 +278,7 @@ html, body, #root {
 }
 
 .nav-item {
-  color: #B8C5A6 !important;
+  color: #FAF9F6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   font-size: 1.2rem;
@@ -295,7 +295,7 @@ html, body, #root {
 }
 
 .nav-item:hover {
-  color: #D4E4C5 !important;
+  color: #FAF9F6 !important;
   transform: translateY(-2px) scale(1.1);
   text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
   font-size: 1.4rem;
@@ -311,7 +311,7 @@ html, body, #root {
 }
 
 .social-item {
-  color: #B8C5A6 !important;
+  color: #FAF9F6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   padding: 0.8rem;
@@ -328,7 +328,7 @@ html, body, #root {
 }
 
 .social-item:hover {
-  color: #D4E4C5 !important;
+  color: #FAF9F6 !important;
   transform: translateY(-2px) scale(1.2);
   text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
 }

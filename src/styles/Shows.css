@@ -6,7 +6,7 @@
 /* Force background colors - highest specificity */
 html, body, #root {
   background-color: rgba(36, 60, 79, 0.85) !important;
-  color: #243C4F !important;
+  color: #FAF9F6 !important;
   margin: 0;
   padding: 0;
   font-family: 'Unna', serif;
@@ -29,7 +29,7 @@ html, body, #root {
   font-family: 'Unna', serif;
   font-size: 5rem;
   font-weight: 700;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   text-align: center;
   margin-bottom: 3rem;
   margin-top: -2rem;
@@ -161,7 +161,7 @@ html, body, #root {
   font-family: 'Unna', serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   margin: 0;
   letter-spacing: 0.05em;
 }
@@ -169,7 +169,7 @@ html, body, #root {
 .show-city {
   font-family: 'Unna', serif;
   font-size: 1.6rem;
-  color: #93A3B1 !important;
+  color: #FAF9F6 !important;
   font-weight: 500;
   margin: 0;
 }
@@ -183,7 +183,7 @@ html, body, #root {
 .show-date {
   font-family: 'Unna', serif;
   font-size: 1.8rem;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   font-weight: 600;
   margin: 0;
 }
@@ -191,7 +191,7 @@ html, body, #root {
 .show-time {
   font-family: 'Unna', serif;
   font-size: 1.4rem;
-  color: #93A3B1 !important;
+  color: #FAF9F6 !important;
   font-weight: 500;
   margin: 0;
 }
@@ -269,12 +269,12 @@ html, body, #root {
   right: 0;
   height: 130px;
   background: linear-gradient(to bottom, 
-    rgba(76, 68, 60, 0.4) 0%, 
-    rgba(76, 68, 60, 0.3) 25%, 
-    rgba(76, 68, 60, 0.2) 50%, 
-    rgba(76, 68, 60, 0.1) 75%, 
-    rgba(76, 68, 60, 0.05) 90%, 
-    rgba(76, 68, 60, 0.02) 100%) !important;
+    rgba(76, 68, 60, 0.6) 0%, 
+    rgba(76, 68, 60, 0.4) 25%, 
+    rgba(76, 68, 60, 0.3) 50%, 
+    rgba(76, 68, 60, 0.2) 75%, 
+    rgba(76, 68, 60, 0.1) 90%, 
+    rgba(76, 68, 60, 0.05) 100%) !important;
   backdrop-filter: blur(8px) saturate(1.1);
   display: flex;
   justify-content: space-between;
@@ -323,7 +323,7 @@ html, body, #root {
 .navbar-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #7C898B !important;
+  color: #FAF9F6 !important;
   margin: 0;
   font-family: 'Unna', serif;
   position: relative;
@@ -336,7 +336,7 @@ html, body, #root {
   left: 0;
   width: 20px;
   height: 1px;
-  background-color: #7C898B;
+  background-color: #FAF9F6;
 }
 
 .nav-list {
@@ -348,7 +348,7 @@ html, body, #root {
 }
 
 .nav-item {
-  color: #B8C5A6 !important;
+  color: #FAF9F6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   font-size: 1.2rem;
@@ -363,7 +363,7 @@ html, body, #root {
 }
 
 .nav-item:hover {
-  color: #D4E4C5 !important;
+  color: #FAF9F6 !important;
   transform: translateY(-2px) scale(1.1);
   text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
   font-size: 1.4rem;
@@ -371,7 +371,7 @@ html, body, #root {
 }
 
 .nav-item.active {
-  color: #D4E4C5 !important;
+  color: #FAF9F6 !important;
   font-weight: 600;
 }
 
@@ -385,7 +385,7 @@ html, body, #root {
 }
 
 .social-item {
-  color: #B8C5A6 !important;
+  color: #FAF9F6 !important;
   text-decoration: none;
   font-family: 'Unna', serif;
   padding: 0.8rem;
@@ -400,7 +400,7 @@ html, body, #root {
 }
 
 .social-item:hover {
-  color: #D4E4C5 !important;
+  color: #FAF9F6 !important;
   transform: translateY(-2px) scale(1.2);
   text-shadow: 1px 1px 3px rgba(50, 34, 20, 0.5);
 }
