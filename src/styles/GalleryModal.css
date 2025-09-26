@@ -24,14 +24,11 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease;
   display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
 }
 
 .gallery-modal-image:hover {
-  transform: translate(-50%, -50%) scale(1.02);
+  transform: scale(1.02);
 }
 
 /* Close button */
