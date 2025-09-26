@@ -1,15 +1,13 @@
 /* Footer Styles */
 .site-footer {
   background-color: #243C4F !important;
+  background: #243C4F !important;
   padding: 2rem 0;
   margin-top: auto;
   border-top: 1px solid rgba(124, 137, 139, 0.2);
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  z-index: 1;
 }
 
 .footer-content {
@@ -31,12 +29,7 @@
 @media (max-width: 768px) {
   .site-footer {
     padding: 1.5rem 0;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    width: 100%;
   }
   
   .footer-content {
@@ -51,12 +44,7 @@
 @media (max-width: 480px) {
   .site-footer {
     padding: 1rem 0;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    width: 100%;
   }
   
   .footer-text {
