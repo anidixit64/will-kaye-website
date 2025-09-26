@@ -18,8 +18,6 @@
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 80vw;
-  max-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,8 +33,10 @@
 }
 
 .gallery-modal-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 80vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
@@ -127,7 +127,7 @@
     padding: 2rem;
   }
   
-  .gallery-modal-container {
+  .gallery-modal-image {
     max-width: 85vw;
     max-height: 85vh;
   }
@@ -164,7 +164,7 @@
     padding: 1.5rem;
   }
   
-  .gallery-modal-container {
+  .gallery-modal-image {
     max-width: 90vw;
     max-height: 90vh;
   }
