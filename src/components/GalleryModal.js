@@ -34,32 +34,36 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
     };
   }, []);
 
-  if (!images || images.length === 0 || currentIndex < 0 || currentIndex >= images.length) {
-    return null;
-  }
+  // Preload images effect - moved before conditional return
+  useEffect(() => {
+    if (!images || images.length === 0 || currentIndex < 0 || currentIndex >= images.length) {
+      return;
+    }
 
-  const currentImage = images[currentIndex];
-  const imageUrl = urlFor(currentImage).width(1200).quality(90).url();
-  
-  // Preload next and previous images for faster navigation
-  const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
-  const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-  
-  const nextImageUrl = urlFor(images[nextIndex]).width(1200).quality(90).url();
-  const prevImageUrl = urlFor(images[prevIndex]).width(1200).quality(90).url();
-  
-  // Preload images
-  React.useEffect(() => {
     const preloadImage = (url) => {
       const img = new Image();
       img.src = url;
     };
     
     if (images.length > 1) {
+      const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+      const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+      
+      const nextImageUrl = urlFor(images[nextIndex]).width(1200).quality(90).url();
+      const prevImageUrl = urlFor(images[prevIndex]).width(1200).quality(90).url();
+      
       preloadImage(nextImageUrl);
       preloadImage(prevImageUrl);
     }
-  }, [currentIndex, nextImageUrl, prevImageUrl, images.length]);
+  }, [currentIndex, images]);
+
+  // Conditional return after all hooks
+  if (!images || images.length === 0 || currentIndex < 0 || currentIndex >= images.length) {
+    return null;
+  }
+
+  const currentImage = images[currentIndex];
+  const imageUrl = urlFor(currentImage).width(1200).quality(90).url();
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {

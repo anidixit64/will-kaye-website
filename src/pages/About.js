@@ -89,14 +89,14 @@ function About() {
   };
 
   const handleNextImage = () => {
-    const galleryImages = siteSettings?.galleryImages || [];
+    const galleryImages = safeDataAccess.getArray(siteSettings?.gallery);
     setCurrentImageIndex((prevIndex) => 
       prevIndex === galleryImages.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const handlePreviousImage = () => {
-    const galleryImages = siteSettings?.galleryImages || [];
+    const galleryImages = safeDataAccess.getArray(siteSettings?.gallery);
     setCurrentImageIndex((prevIndex) => 
       prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
     );
