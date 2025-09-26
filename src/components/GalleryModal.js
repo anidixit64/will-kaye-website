@@ -70,51 +70,49 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
 
   return (
     <div className="gallery-modal-overlay" onClick={handleBackdropClick}>
-      <div className="gallery-modal-container">
-        {/* Close button */}
-        <button 
-          className="gallery-modal-close"
-          onClick={onClose}
-          aria-label="Close gallery"
-        >
-          <FaTimes size={24} />
-        </button>
+      {/* Close button */}
+      <button 
+        className="gallery-modal-close"
+        onClick={onClose}
+        aria-label="Close gallery"
+      >
+        <FaTimes size={24} />
+      </button>
 
-        {/* Navigation arrows */}
-        {images.length > 1 && (
-          <>
-            <button 
-              className="gallery-modal-nav gallery-modal-nav-left"
-              onClick={onPrevious}
-              aria-label="Previous image"
-            >
-              <FaChevronLeft size={32} />
-            </button>
-            
-            <button 
-              className="gallery-modal-nav gallery-modal-nav-right"
-              onClick={onNext}
-              aria-label="Next image"
-            >
-              <FaChevronRight size={32} />
-            </button>
-          </>
-        )}
+      {/* Navigation arrows */}
+      {images.length > 1 && (
+        <>
+          <button 
+            className="gallery-modal-nav gallery-modal-nav-left"
+            onClick={onPrevious}
+            aria-label="Previous image"
+          >
+            <FaChevronLeft size={32} />
+          </button>
+          
+          <button 
+            className="gallery-modal-nav gallery-modal-nav-right"
+            onClick={onNext}
+            aria-label="Next image"
+          >
+            <FaChevronRight size={32} />
+          </button>
+        </>
+      )}
 
-        {/* Image */}
-        <OptimizedImage
-          src={imageUrl}
-          alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
-          className="gallery-modal-image"
-        />
+      {/* Image */}
+      <OptimizedImage
+        src={imageUrl}
+        alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
+        className="gallery-modal-image"
+      />
 
-        {/* Image counter */}
-        {images.length > 1 && (
-          <div className="gallery-modal-counter">
-            {currentIndex + 1} / {images.length}
-          </div>
-        )}
-      </div>
+      {/* Image counter */}
+      {images.length > 1 && (
+        <div className="gallery-modal-counter">
+          {currentIndex + 1} / {images.length}
+        </div>
+      )}
     </div>
   );
 }
