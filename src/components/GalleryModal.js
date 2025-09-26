@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
-import OptimizedImage from './OptimizedImage';
 import { urlFor } from '../lib/sanity';
 import '../styles/GalleryModal.css';
 
@@ -101,7 +100,7 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
       )}
 
       {/* Image */}
-      <OptimizedImage
+      <img
         src={imageUrl}
         alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
         className="gallery-modal-image"
