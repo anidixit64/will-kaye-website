@@ -146,7 +146,7 @@ html, body, #root {
 /* EPK section spacer - positioned halfway between gallery and bottom */
 .epk-section-spacer {
   text-align: center;
-  margin: 1rem auto;
+  margin: 3rem auto 4rem auto;
   z-index: 10;
   position: relative;
   display: flex;
