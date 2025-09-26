@@ -264,14 +264,9 @@ html, body, #root {
   left: 0;
   right: 0;
   height: 130px;
-  background: linear-gradient(to bottom, 
-    rgba(76, 68, 60, 0.6) 0%, 
-    rgba(76, 68, 60, 0.4) 25%, 
-    rgba(76, 68, 60, 0.3) 50%, 
-    rgba(76, 68, 60, 0.2) 75%, 
-    rgba(76, 68, 60, 0.1) 90%, 
-    rgba(76, 68, 60, 0.05) 100%) !important;
-  backdrop-filter: blur(8px) saturate(1.1);
+  background-color: rgba(36, 60, 79, 0.6) !important;
+  background: rgba(36, 60, 79, 0.6) !important;
+  backdrop-filter: blur(15px) saturate(1.4);
   display: flex;
   justify-content: space-between;
   align-items: center;
