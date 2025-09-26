@@ -5,7 +5,7 @@
 
 /* Force background colors - highest specificity */
 html, body, #root {
-  background-color: rgba(36, 60, 79, 0.85) !important;
+  background-color: rgba(36, 60, 79, 0.70) !important;
   color: #FAF9F6 !important;
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@ html, body, #root {
 /* Shows container */
 .shows-container {
   min-height: 100vh;
-  background-color: rgba(36, 60, 79, 0.85) !important;
+  background-color: rgba(36, 60, 79, 0.70) !important;
   position: relative;
   display: flex;
   flex-direction: column;

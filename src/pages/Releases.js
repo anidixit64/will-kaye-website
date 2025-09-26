@@ -135,7 +135,7 @@ function Releases() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(36, 60, 79, 0.90)', // Less transparent navy overlay
+          backgroundColor: 'rgba(36, 60, 79, 0.70)', // More transparent navy overlay
           zIndex: 2
         }}
       />

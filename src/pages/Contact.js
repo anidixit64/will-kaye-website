@@ -74,7 +74,7 @@ function Contact() {
         className="contact-container"
         style={{
           minHeight: '100vh',
-          backgroundColor: 'rgba(36, 60, 79, 0.85)',
+          backgroundColor: 'rgba(36, 60, 79, 0.70)',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
@@ -120,7 +120,7 @@ function Contact() {
         onMouseLeave={handleMouseLeave}
         style={{
           minHeight: '100vh',
-          backgroundColor: 'rgba(36, 60, 79, 0.85)',
+          backgroundColor: 'rgba(36, 60, 79, 0.70)',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
@@ -158,7 +158,7 @@ function Contact() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(36, 60, 79, 0.90)', // Less transparent navy overlay
+          backgroundColor: 'rgba(36, 60, 79, 0.70)', // More transparent navy overlay
           zIndex: 2
         }}
       />

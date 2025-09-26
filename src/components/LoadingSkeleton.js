@@ -3,7 +3,7 @@ import React from 'react';
 export const PageSkeleton = () => (
   <div style={{
     minHeight: '100vh',
-    backgroundColor: 'rgba(36, 60, 79, 0.85)',
+    backgroundColor: 'rgba(36, 60, 79, 0.70)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
