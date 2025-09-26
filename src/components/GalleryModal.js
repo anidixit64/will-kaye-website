@@ -101,14 +101,12 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
           </>
         )}
 
-        {/* Image container */}
-        <div className="gallery-modal-image-container">
-          <OptimizedImage
-            src={imageUrl}
-            alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
-            className="gallery-modal-image"
-          />
-        </div>
+        {/* Image */}
+        <OptimizedImage
+          src={imageUrl}
+          alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
+          className="gallery-modal-image"
+        />
 
         {/* Image counter */}
         {images.length > 1 && (
