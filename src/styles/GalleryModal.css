@@ -34,8 +34,9 @@
 /* Close button */
 .gallery-modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 50%;
+  right: 50%;
+  transform: translate(calc(40vw + 1rem), -50%);
   background-color: rgba(36, 60, 79, 0.9);
   color: #FAF9F6;
   border: none;
@@ -53,7 +54,7 @@
 
 .gallery-modal-close:hover {
   background-color: rgba(124, 137, 139, 0.9);
-  transform: scale(1.1);
+  transform: translate(calc(40vw + 1rem), -50%) scale(1.1);
 }
 
 /* Navigation arrows */
@@ -76,17 +77,24 @@
   backdrop-filter: blur(8px);
 }
 
-.gallery-modal-nav:hover {
+.gallery-modal-nav-left:hover {
   background-color: rgba(124, 137, 139, 0.9);
-  transform: translateY(-50%) scale(1.1);
+  transform: translate(calc(-40vw - 1rem), -50%) scale(1.1);
+}
+
+.gallery-modal-nav-right:hover {
+  background-color: rgba(124, 137, 139, 0.9);
+  transform: translate(calc(40vw + 1rem), -50%) scale(1.1);
 }
 
 .gallery-modal-nav-left {
-  left: 1rem;
+  left: 50%;
+  transform: translate(calc(-40vw - 1rem), -50%);
 }
 
 .gallery-modal-nav-right {
-  right: 1rem;
+  right: 50%;
+  transform: translate(calc(40vw + 1rem), -50%);
 }
 
 /* Image counter */
@@ -117,10 +125,13 @@
   }
   
   .gallery-modal-close {
-    top: 0.5rem;
-    right: 0.5rem;
+    transform: translate(calc(42.5vw + 1rem), -50%);
     width: 40px;
     height: 40px;
+  }
+  
+  .gallery-modal-close:hover {
+    transform: translate(calc(42.5vw + 1rem), -50%) scale(1.1);
   }
   
   .gallery-modal-nav {
@@ -129,11 +140,19 @@
   }
   
   .gallery-modal-nav-left {
-    left: 0.5rem;
+    transform: translate(calc(-42.5vw - 1rem), -50%);
+  }
+  
+  .gallery-modal-nav-left:hover {
+    transform: translate(calc(-42.5vw - 1rem), -50%) scale(1.1);
   }
   
   .gallery-modal-nav-right {
-    right: 0.5rem;
+    transform: translate(calc(42.5vw + 1rem), -50%);
+  }
+  
+  .gallery-modal-nav-right:hover {
+    transform: translate(calc(42.5vw + 1rem), -50%) scale(1.1);
   }
   
   .gallery-modal-counter {
@@ -154,13 +173,34 @@
   }
   
   .gallery-modal-close {
+    transform: translate(calc(45vw + 1rem), -50%);
     width: 36px;
     height: 36px;
+  }
+  
+  .gallery-modal-close:hover {
+    transform: translate(calc(45vw + 1rem), -50%) scale(1.1);
   }
   
   .gallery-modal-nav {
     width: 44px;
     height: 44px;
+  }
+  
+  .gallery-modal-nav-left {
+    transform: translate(calc(-45vw - 1rem), -50%);
+  }
+  
+  .gallery-modal-nav-left:hover {
+    transform: translate(calc(-45vw - 1rem), -50%) scale(1.1);
+  }
+  
+  .gallery-modal-nav-right {
+    transform: translate(calc(45vw + 1rem), -50%);
+  }
+  
+  .gallery-modal-nav-right:hover {
+    transform: translate(calc(45vw + 1rem), -50%) scale(1.1);
   }
   
   .gallery-modal-counter {
