@@ -8,6 +8,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
 import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
+import LoadingScreen from '../components/LoadingScreen';
 import '../styles/Home.css';
 
 function Home() {
@@ -16,6 +17,8 @@ function Home() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [layloLoaded, setLayloLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -60,6 +63,20 @@ function Home() {
       setShowHeader(false);
     }
   };
+
+  // Handle loading screen completion
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    // Start content animations after a brief delay
+    setTimeout(() => {
+      setShowContent(true);
+    }, 100);
+  };
+
+  // Show loading screen on first visit
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+  }
 
 
   if (loading) {
@@ -190,7 +207,7 @@ function Home() {
 
       {/* Main Content */}
       {mainImageUrl && (
-        <div className="main-image-container">
+        <div className={`main-image-container ${showContent ? 'animate-in' : ''}`}>
           <OptimizedImage 
             src={mainImageUrl} 
             alt="Will Kaye" 
@@ -201,17 +218,17 @@ function Home() {
       )}
       
       {/* Content that appears after the image */}
-      <div className="content-after-image">
-        <div className="bio-section" style={{ zIndex: 10 }}>
+      <div className={`content-after-image ${showContent ? 'animate-in' : ''}`}>
+        <div className={`bio-section ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}>
           <p className="bio-text">
             {safeDataAccess.getText(siteSettings?.shortBio, 
               'Musician, artist, and creative soul. Welcome to my musical journey.')}
           </p>
         </div>
 
-        <div className="divider-bar" style={{ zIndex: 10 }}></div>
+        <div className={`divider-bar ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}></div>
 
-        <div className="mailing-list-section" style={{ zIndex: 10 }}>
+        <div className={`mailing-list-section ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}>
           <h2 style={{
             color: '#FAF9F6',
             fontSize: '2rem',
