@@ -247,7 +247,7 @@ function Contact() {
               onClick={() => handleEmailClick(siteSettings.contactEmail)}
               style={{ marginBottom: '2rem' }}
             >
-              📧 Send Email
+              Send Email
             </button>
           )}
         </div>
@@ -273,8 +273,9 @@ function Contact() {
             <button 
               className="submit-button"
               onClick={() => handleEmailClick(siteSettings.bookingEmail)}
+              style={{ marginTop: '1.5rem' }}
             >
-              📧 Book Now
+              Book Now
             </button>
           </div>
         )}

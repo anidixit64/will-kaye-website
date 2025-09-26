@@ -251,7 +251,7 @@ function Shows() {
                         className="show-link tickets"
                         onClick={() => handleTicketClick(show.ticketLink)}
                       >
-                        🎫 Buy Tickets
+                        Buy Tickets
                       </button>
                     )}
                     
