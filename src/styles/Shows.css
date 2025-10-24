@@ -173,6 +173,53 @@ html, body, #root {
   color: #FAF9F6 !important;
   font-weight: 500;
   margin: 0;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.show-address {
+  font-family: 'Unna', serif;
+  font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+  color: #93A3B1 !important;
+  font-weight: 400;
+  margin: 0;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Ticket Status Banner */
+.ticket-status-banner {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: 'Unna', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ticket-status-banner.no-tickets {
+  background-color: rgba(34, 197, 94, 0.9);
+  color: #FAF9F6;
+  border: 2px solid rgba(34, 197, 94, 0.6);
+}
+
+.ticket-status-banner.tickets-needed {
+  background-color: rgba(239, 68, 68, 0.9);
+  color: #FAF9F6;
+  border: 2px solid rgba(239, 68, 68, 0.6);
+}
+
+.ticket-status-banner.tickets-at-door {
+  background-color: rgba(245, 158, 11, 0.9);
+  color: #FAF9F6;
+  border: 2px solid rgba(245, 158, 11, 0.6);
 }
 
 .show-datetime {
@@ -608,6 +655,17 @@ html, body, #root {
   
   .show-city {
     font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+  }
+  
+  .show-address {
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  }
+  
+  .ticket-status-banner {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
   }
   
   .show-date {

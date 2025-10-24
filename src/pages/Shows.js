@@ -223,7 +223,16 @@ function Shows() {
               
               {/* Right half - Venue Info */}
               <div className={`show-info-section ${!show.venueImage ? 'show-info-full' : ''}`}>
-                {/* Top half - Venue name and city */}
+                {/* Ticket Status Banner */}
+                {show.ticketStatus && (
+                  <div className={`ticket-status-banner ${show.ticketStatus}`}>
+                    {show.ticketStatus === 'no-tickets' && 'No Tickets Needed'}
+                    {show.ticketStatus === 'tickets-needed' && 'Tickets Needed'}
+                    {show.ticketStatus === 'tickets-at-door' && 'Tickets at Door'}
+                  </div>
+                )}
+                
+                {/* Top half - Venue name, city, and address */}
                 <div className="show-venue-info">
                   <h2 className="show-venue">
                     {safeDataAccess.getText(show.venue, 'TBA')}
@@ -231,6 +240,11 @@ function Shows() {
                   {show.city && (
                     <p className="show-city">
                       {safeDataAccess.getText(show.city)}
+                    </p>
+                  )}
+                  {show.address && (
+                    <p className="show-address">
+                      {safeDataAccess.getText(show.address)}
                     </p>
                   )}
                 </div>
