@@ -233,17 +233,38 @@ function About() {
       <div className="divider-bar" style={{ zIndex: 10 }}></div>
       
       <div className="about-content" style={{ zIndex: 10 }}>
-        {siteSettings?.longBio && Array.isArray(siteSettings.longBio) && siteSettings.longBio.length > 0 ? (
-          <div className="about-text">
-            <PortableText value={siteSettings.longBio} />
+        <div className="about-text-section">
+          {siteSettings?.longBio && Array.isArray(siteSettings.longBio) && siteSettings.longBio.length > 0 ? (
+            <div className="about-text">
+              <PortableText value={siteSettings.longBio} />
+            </div>
+          ) : (
+            <p className="about-text">
+              Welcome to the story behind the music. Will Kaye's journey through the world of sound and storytelling.
+              From humble beginnings to creating music that touches the soul, Will has dedicated his life to the craft 
+              of storytelling through song. With roots deeply planted in Americana traditions, his music weaves together 
+              the threads of folk, country, and rock into a tapestry that speaks to the heart of the American experience.
+            </p>
+          )}
+        </div>
+        
+        {siteSettings?.headshot ? (
+          <div className="about-headshot-section">
+            <OptimizedImage 
+              src={safeDataAccess.getImageUrl(siteSettings.headshot, 700)} 
+              alt={siteSettings.headshot.alt || "Will Kaye headshot"}
+              className="about-headshot"
+              width="350px"
+              height="400px"
+            />
           </div>
         ) : (
-          <p className="about-text">
-            Welcome to the story behind the music. Will Kaye's journey through the world of sound and storytelling.
-            From humble beginnings to creating music that touches the soul, Will has dedicated his life to the craft 
-            of storytelling through song. With roots deeply planted in Americana traditions, his music weaves together 
-            the threads of folk, country, and rock into a tapestry that speaks to the heart of the American experience.
-          </p>
+          <div className="about-headshot-section">
+            <div className="about-headshot placeholder-headshot">
+              <p>Headshot placeholder</p>
+              <p>Upload an image in Sanity Studio</p>
+            </div>
+          </div>
         )}
       </div>
 
