@@ -92,12 +92,12 @@ function Releases() {
   ];
 
   const socialLinks = [
-    { name: 'Instagram', url: '#', icon: FaInstagram },
-    { name: 'Facebook', url: '#', icon: FaFacebook },
-    { name: 'TikTok', url: '#', icon: FaTiktok },
-    { name: 'Spotify', url: '#', icon: FaSpotify },
-    { name: 'Apple Music', url: '#', icon: FaApple },
-    { name: 'YouTube', url: '#', icon: FaYoutube },
+    { name: 'Instagram', url: siteSettings?.instagramUrl || '#', icon: FaInstagram },
+    { name: 'Facebook', url: siteSettings?.facebookUrl || '#', icon: FaFacebook },
+    { name: 'TikTok', url: siteSettings?.tiktokUrl || '#', icon: FaTiktok },
+    { name: 'Spotify', url: siteSettings?.spotifyUrl || '#', icon: FaSpotify },
+    { name: 'Apple Music', url: siteSettings?.appleMusicUrl || '#', icon: FaApple },
+    { name: 'YouTube', url: siteSettings?.youtubeUrl || '#', icon: FaYoutube },
   ];
 
   return (
@@ -286,7 +286,7 @@ function Releases() {
           ))
         ) : (
           <div className="no-releases">
-            No releases
+            Releases coming soon
           </div>
         )}
       </div>
