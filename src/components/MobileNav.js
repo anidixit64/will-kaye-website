@@ -26,22 +26,29 @@ function MobileNav({ currentPath, navItems, socialLinks }) {
     <>
       {/* Mobile Navigation Buttons */}
       <div className="mobile-nav-buttons">
-        {/* Left Navigation Button */}
+        {/* Left Pages Button */}
         <button 
           className={`mobile-nav-btn mobile-nav-left ${isNavOpen ? 'active' : ''}`}
           onClick={toggleNav}
-          aria-label="Toggle Navigation"
+          aria-label="Toggle Pages"
         >
-          {isNavOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+          <span className="mobile-nav-btn-text">Pages</span>
+          {isNavOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
         </button>
 
-        {/* Right Social Button */}
+        {/* Center Logo/Title */}
+        <div className="mobile-nav-center">
+          <img src="/willkayelogo.png" alt="Will Kaye" className="mobile-nav-logo" />
+        </div>
+
+        {/* Right Social Media Button */}
         <button 
           className={`mobile-nav-btn mobile-nav-right ${isSocialOpen ? 'active' : ''}`}
           onClick={toggleSocial}
-          aria-label="Toggle Social Links"
+          aria-label="Toggle Social Media"
         >
-          {isSocialOpen ? <FaTimes size={20} /> : <FaInstagram size={20} />}
+          <span className="mobile-nav-btn-text">Social</span>
+          {isSocialOpen ? <FaTimes size={16} /> : <FaInstagram size={16} />}
         </button>
       </div>
 
