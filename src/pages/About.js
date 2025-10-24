@@ -273,7 +273,9 @@ function About() {
         <div className="gallery-section" style={{ zIndex: 10 }}>
           <h2 className="gallery-title">Gallery</h2>
           <div className="gallery-grid">
-            {safeDataAccess.getArray(siteSettings?.gallery).map((image, index) => {
+            {safeDataAccess.getArray(siteSettings?.gallery).map((galleryItem, index) => {
+              // Handle both old structure (direct image) and new structure (object with image and photographer)
+              const image = galleryItem.image || galleryItem;
               const imageUrl = safeDataAccess.getImageUrl(image, 600);
               return imageUrl ? (
                 <div 
@@ -284,7 +286,7 @@ function About() {
                 >
                   <OptimizedImage 
                     src={imageUrl} 
-                    alt={`Gallery image ${index + 1}`}
+                    alt={image.alt || `Gallery image ${index + 1}`}
                     className="gallery-image"
                     width="100%"
                     height="300px"

@@ -49,8 +49,10 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
       const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
       const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
       
-      const nextImageUrl = urlFor(images[nextIndex]).width(1200).quality(90).url();
-      const prevImageUrl = urlFor(images[prevIndex]).width(1200).quality(90).url();
+      const nextImage = images[nextIndex].image || images[nextIndex];
+      const prevImage = images[prevIndex].image || images[prevIndex];
+      const nextImageUrl = urlFor(nextImage).width(1200).quality(90).url();
+      const prevImageUrl = urlFor(prevImage).width(1200).quality(90).url();
       
       preloadImage(nextImageUrl);
       preloadImage(prevImageUrl);
@@ -63,7 +65,9 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
   }
 
   const currentImage = images[currentIndex];
-  const imageUrl = urlFor(currentImage).width(1200).quality(90).url();
+  // Handle both old structure (direct image) and new structure (object with image and photographer)
+  const image = currentImage.image || currentImage;
+  const imageUrl = urlFor(image).width(1200).quality(90).url();
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
@@ -104,11 +108,20 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
       )}
 
       {/* Image */}
-      <img
-        src={imageUrl}
-        alt={currentImage.alt || `Gallery image ${currentIndex + 1}`}
-        className="gallery-modal-image"
-      />
+      <div className="gallery-modal-image-container">
+        <img
+          src={imageUrl}
+          alt={image.alt || `Gallery image ${currentIndex + 1}`}
+          className="gallery-modal-image"
+        />
+        
+        {/* Photographer credit banner */}
+        {currentImage.photographer && (
+          <div className="gallery-modal-credit">
+            {currentImage.photographer}
+          </div>
+        )}
+      </div>
 
       {/* Image counter */}
       {images.length > 1 && (

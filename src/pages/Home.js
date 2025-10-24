@@ -6,6 +6,7 @@ import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from
 import MobileNav from '../components/MobileNav';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OptimizedImage from '../components/OptimizedImage';
+import ContactForm from '../components/ContactForm';
 import Footer from '../components/Footer';
 import { PageSkeleton } from '../components/LoadingSkeleton';
 import LoadingScreen from '../components/LoadingScreen';
@@ -228,7 +229,7 @@ function Home() {
 
         <div className={`divider-bar ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}></div>
 
-        <div className={`mailing-list-section ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}>
+        <div className={`contact-section ${showContent ? 'animate-in' : ''}`} style={{ zIndex: 10 }}>
           <h2 style={{
             color: '#FAF9F6',
             fontSize: '2rem',
@@ -237,100 +238,9 @@ function Home() {
             marginBottom: '2rem',
             fontWeight: '700'
           }}>
-            Sign up for my Mailing List
+            Get in Touch
           </h2>
-          <div style={{ position: 'relative' }}>
-            <iframe 
-              id="laylo-drop-hgTsE"
-              frameBorder="0"
-              scrolling="no"
-              allow="web-share"
-              allowTransparency="true"
-              style={{
-                width: '100%',
-                minWidth: '300px',
-                maxWidth: '1000px',
-                height: '200px',
-                border: '1px solid rgba(250, 249, 246, 0.3)',
-                borderRadius: '8px',
-                display: 'block',
-                margin: '0 auto',
-                backgroundColor: 'rgba(76, 68, 60, 0.3)'
-              }}
-              src="https://embed.laylo.com?dropId=hgTsE&color=0000FF&minimal=false&theme=light"
-              title="Laylo Email Signup"
-              onLoad={() => {
-                console.log('Laylo iframe loaded');
-                // Check if iframe has content after a delay
-                setTimeout(() => {
-                  const iframe = document.getElementById('laylo-drop-hgTsE');
-                  if (iframe) {
-                    try {
-                      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                      console.log('Iframe content:', iframeDoc.body?.innerHTML || 'No content');
-                    } catch (e) {
-                      console.log('Cannot access iframe content (CORS):', e.message);
-                    }
-                  }
-                }, 2000);
-              }}
-              onError={() => {
-                console.log('Laylo iframe failed to load');
-              }}
-            />
-            
-            {/* Debug overlay */}
-            <div style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              color: '#FAF9F6',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              fontSize: '0.8rem',
-              zIndex: 10
-            }}>
-              Debug: Iframe loaded
-            </div>
-            
-            {/* Fallback message if no content */}
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              backgroundColor: 'rgba(76, 68, 60, 0.9)',
-              color: '#FAF9F6',
-              padding: '1rem',
-              borderRadius: '8px',
-              textAlign: 'center',
-              fontSize: '0.9rem',
-              zIndex: 5
-            }}>
-              <p style={{ margin: '0 0 1rem 0' }}>
-                Laylo embed not showing content
-              </p>
-              <p style={{ margin: '0 0 1rem 0', fontSize: '0.8rem', opacity: 0.8 }}>
-                Drop ID: hgTsE
-              </p>
-              <a 
-                href="https://laylo.com/hgTsE" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{
-                  color: '#FAF9F6',
-                  textDecoration: 'underline',
-                  backgroundColor: 'rgba(99, 101, 100, 0.8)',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '4px',
-                  display: 'inline-block'
-                }}
-              >
-                Try Direct Link
-              </a>
-            </div>
-          </div>
+          <ContactForm contactEmail={siteSettings?.contactEmail} />
         </div>
       </div>
 

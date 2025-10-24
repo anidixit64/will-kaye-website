@@ -194,6 +194,25 @@ html, body, #root {
   transform: translateY(0);
 }
 
+/* Contact section */
+.contact-section {
+  max-width: 80%;
+  width: 80%;
+  margin: 3rem auto 6rem auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  z-index: 10;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 1.2s;
+}
+
+.contact-section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .mailing-list-form {
   display: flex;
   flex-direction: column;
@@ -626,6 +645,11 @@ html, body, #root {
   
   .contact-container {
     padding: clamp(160px, 18vh, 180px) 1rem 1rem;
+  }
+  
+  .contact-section {
+    margin: 3rem auto 6rem auto;
+    padding: 0 1rem;
   }
   
   .main-image-container {
