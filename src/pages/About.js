@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../context/DataContext';
-import { safeDataAccess } from '../lib/sanity';
+import { safeDataAccess, urlFor } from '../lib/sanity';
 import { FaInstagram, FaFacebook, FaTiktok, FaSpotify, FaApple, FaYoutube } from 'react-icons/fa';
 import { PortableText } from '@portabletext/react';
 import MobileNav from '../components/MobileNav';
@@ -17,6 +17,7 @@ function About() {
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  const [headshotHovering, setHeadshotHovering] = useState(false);
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -249,14 +250,25 @@ function About() {
         </div>
         
         {siteSettings?.headshot ? (
-          <div className="about-headshot-section">
-            <OptimizedImage 
-              src={safeDataAccess.getImageUrl(siteSettings.headshot, 700)} 
-              alt={siteSettings.headshot.alt || "Will Kaye headshot"}
-              className="about-headshot"
-              width="350px"
-              height="400px"
-            />
+          <div 
+            className="about-headshot-section"
+            onMouseEnter={() => setHeadshotHovering(true)}
+            onMouseLeave={() => setHeadshotHovering(false)}
+          >
+            <div className="about-headshot-wrapper">
+              <OptimizedImage 
+                src={safeDataAccess.getImageUrl(siteSettings.headshot, 700)} 
+                alt={siteSettings.headshot.alt || "Will Kaye headshot"}
+                className="about-headshot"
+                width="350px"
+                height="400px"
+              />
+              {siteSettings.headshot.alt && headshotHovering && (
+                <div className="about-headshot-credit">
+                  {siteSettings.headshot.alt}
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <div className="about-headshot-section">

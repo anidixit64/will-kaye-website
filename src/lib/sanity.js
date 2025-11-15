@@ -29,6 +29,8 @@ export const queries = {
     date,
     venue,
     city,
+    address,
+    ticketStatus,
     ticketLink,
     venueImage {
       ...,
@@ -43,12 +45,22 @@ export const queries = {
     backgroundImage,
     longBio,
     gallery,
+    headshot {
+      ...,
+      alt
+    },
     epkFile {
       ...,
       "url": asset->url
     },
     contactEmail,
-    bookingEmail
+    bookingEmail,
+    instagramUrl,
+    facebookUrl,
+    tiktokUrl,
+    spotifyUrl,
+    appleMusicUrl,
+    youtubeUrl
   }`
 }
 

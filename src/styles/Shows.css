@@ -190,18 +190,16 @@ html, body, #root {
 
 /* Ticket Status Banner */
 .ticket-status-banner {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  display: inline-block;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+  border-radius: 8px;
   font-family: 'Unna', serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  z-index: 5;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 .ticket-status-banner.no-tickets {
@@ -220,6 +218,28 @@ html, body, #root {
   background-color: rgba(245, 158, 11, 0.9);
   color: #FAF9F6;
   border: 2px solid rgba(245, 158, 11, 0.6);
+}
+
+.ticket-status-banner.tickets-coming-soon {
+  background-color: rgba(99, 101, 100, 0.9);
+  color: #FAF9F6;
+  border: 2px solid rgba(99, 101, 100, 0.6);
+  font-style: italic;
+}
+
+.ticket-status-banner.tickets-here {
+  background-color: rgba(59, 130, 246, 0.9);
+  color: #FAF9F6;
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ticket-status-banner.tickets-here:hover {
+  background-color: rgba(37, 99, 235, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .show-datetime {

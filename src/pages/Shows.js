@@ -223,15 +223,6 @@ function Shows() {
               
               {/* Right half - Venue Info */}
               <div className={`show-info-section ${!show.venueImage ? 'show-info-full' : ''}`}>
-                {/* Ticket Status Banner */}
-                {show.ticketStatus && (
-                  <div className={`ticket-status-banner ${show.ticketStatus}`}>
-                    {show.ticketStatus === 'no-tickets' && 'No Tickets Needed'}
-                    {show.ticketStatus === 'tickets-needed' && 'Tickets Needed'}
-                    {show.ticketStatus === 'tickets-at-door' && 'Tickets at Door'}
-                  </div>
-                )}
-                
                 {/* Top half - Venue name, city, and address */}
                 <div className="show-venue-info">
                   <h2 className="show-venue">
@@ -261,19 +252,45 @@ function Shows() {
                   </div>
                   
                   <div className="show-links">
-                    {safeDataAccess.getUrl(show.ticketLink) && (
-                      <button 
-                        className="show-link tickets"
-                        onClick={() => handleTicketClick(show.ticketLink)}
-                      >
-                        Buy Tickets
-                      </button>
+                    {/* Ticket Status Banner */}
+                    {show.ticketStatus === 'no-tickets' && (
+                      <div className="ticket-status-banner no-tickets">
+                        No Tickets Needed
+                      </div>
                     )}
                     
-                    {!safeDataAccess.getUrl(show.ticketLink) && (
-                      <span style={{ color: '#93A3B1', fontStyle: 'italic' }}>
-                        Tickets coming soon
-                      </span>
+                    {show.ticketStatus === 'tickets-at-door' && (
+                      <div className="ticket-status-banner tickets-at-door">
+                        Tickets at Door
+                      </div>
+                    )}
+                    
+                    {show.ticketStatus === 'tickets-needed' && (
+                      safeDataAccess.getUrl(show.ticketLink) ? (
+                        <a
+                          href={show.ticketLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ticket-status-banner tickets-here"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleTicketClick(show.ticketLink);
+                          }}
+                        >
+                          Tickets Here
+                        </a>
+                      ) : (
+                        <div className="ticket-status-banner tickets-coming-soon">
+                          Tickets Coming Soon
+                        </div>
+                      )
+                    )}
+                    
+                    {/* Fallback if no ticketStatus is set */}
+                    {!show.ticketStatus && !safeDataAccess.getUrl(show.ticketLink) && (
+                      <div className="ticket-status-banner tickets-coming-soon">
+                        Tickets Coming Soon
+                      </div>
                     )}
                   </div>
                 </div>

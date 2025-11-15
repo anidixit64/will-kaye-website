@@ -115,7 +115,7 @@ function GalleryModal({ images, currentIndex, onClose, onNext, onPrevious }) {
           className="gallery-modal-image"
         />
         
-        {/* Photographer credit banner */}
+        {/* Photographer credit banner - always visible and scales with image */}
         {currentImage.photographer && (
           <div className="gallery-modal-credit">
             {currentImage.photographer}
